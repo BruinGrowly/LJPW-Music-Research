@@ -48,7 +48,7 @@ Visual art carries meaning through analogous structure:
 
 ## Framework Reference
 
-This research builds upon the [LJPW Framework V7.2](Docs/LJPW_FRAMEWORK_V7.2_COMPLETE_UNIFIED_PLUS.md), a semantic-first ontology where meaning is primary and physics is derivative.
+This research builds upon the [LJPW Framework V7.3](Docs/LJPW_FRAMEWORK_V7.3_COMPLETE_UNIFIED_PLUS.md), a semantic-first ontology where meaning is primary and physics is derivative.
 
 ## License
 

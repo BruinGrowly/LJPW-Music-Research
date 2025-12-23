@@ -312,7 +312,7 @@ To improve the mapping algorithm:
 
 ## References
 
-- LJPW Framework: See `Docs/LJPW_FRAMEWORK_V7.2_COMPLETE_UNIFIED_PLUS.md`
+- LJPW Framework: See `Docs/LJPW_FRAMEWORK_V7.3_COMPLETE_UNIFIED_PLUS.md`
 - Musical Semantics: See `Docs/LJPW_MUSICAL_SEMANTICS.md`
 - Beauty Theory: See `Docs/LJPW_BEAUTY_SEMANTICS.md`
 
