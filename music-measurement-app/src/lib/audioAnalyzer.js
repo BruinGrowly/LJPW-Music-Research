@@ -15,7 +15,6 @@ import {
 } from './ljpwEngine';
 
 // Feature extraction configuration
-const SAMPLE_RATE = 44100;
 const BUFFER_SIZE = 2048;
 const HOP_SIZE = 512;
 
@@ -24,6 +23,12 @@ const HOP_SIZE = 512;
  */
 export async function loadAudioFile(file) {
   const audioContext = new (window.AudioContext || window.webkitAudioContext)();
+
+  // Resume context if suspended (required by browsers)
+  if (audioContext.state === 'suspended') {
+    await audioContext.resume();
+  }
+
   const arrayBuffer = await file.arrayBuffer();
   const audioBuffer = await audioContext.decodeAudioData(arrayBuffer);
   return { audioContext, audioBuffer };
@@ -32,10 +37,14 @@ export async function loadAudioFile(file) {
 /**
  * Extract audio features from an AudioBuffer using Meyda
  */
-export function extractFeatures(audioBuffer, audioContext) {
+export function extractFeatures(audioBuffer, onProgress) {
   const channelData = audioBuffer.getChannelData(0); // Use first channel
   const sampleRate = audioBuffer.sampleRate;
   const duration = audioBuffer.duration;
+
+  // Configure Meyda
+  Meyda.bufferSize = BUFFER_SIZE;
+  Meyda.sampleRate = sampleRate;
 
   // Features to extract
   const features = {
@@ -50,13 +59,18 @@ export function extractFeatures(audioBuffer, audioContext) {
   };
 
   // Process audio in chunks
-  const numChunks = Math.floor(channelData.length / HOP_SIZE) - Math.floor(BUFFER_SIZE / HOP_SIZE);
+  const numChunks = Math.floor((channelData.length - BUFFER_SIZE) / HOP_SIZE);
+
+  if (numChunks <= 0) {
+    console.warn('Audio file too short for analysis');
+    return { features, duration, sampleRate, numChunks: 0 };
+  }
 
   for (let i = 0; i < numChunks; i++) {
     const start = i * HOP_SIZE;
     const chunk = channelData.slice(start, start + BUFFER_SIZE);
 
-    // Pad if necessary
+    // Create properly sized buffer
     const signal = new Float32Array(BUFFER_SIZE);
     signal.set(chunk);
 
@@ -77,7 +91,13 @@ export function extractFeatures(audioBuffer, audioContext) {
         features.loudness.push(extracted.loudness?.total || 0);
       }
     } catch (e) {
-      // Skip problematic chunks
+      // Skip problematic chunks silently
+    }
+
+    // Report progress every 10%
+    if (i % Math.floor(numChunks / 10) === 0 && onProgress) {
+      const progressPct = Math.round((i / numChunks) * 40) + 20; // 20-60%
+      onProgress({ stage: 'extracting', progress: progressPct, message: `Extracting features... ${Math.round((i / numChunks) * 100)}%` });
     }
   }
 
@@ -232,9 +252,7 @@ export function mapToLJPW(features, tempo, keyInfo) {
   const rmsStats = calculateStats(features.features.rms);
   const centroidStats = calculateStats(features.features.spectralCentroid);
   const flatnessStats = calculateStats(features.features.spectralFlatness);
-  const rolloffStats = calculateStats(features.features.spectralRolloff);
   const zcrStats = calculateStats(features.features.zcr);
-  const loudnessStats = calculateStats(features.features.loudness);
 
   // Calculate chroma strength (how tonal the music is)
   let chromaStrength = 0;
@@ -254,16 +272,15 @@ export function mapToLJPW(features, tempo, keyInfo) {
   const normalizedBrightness = Math.min(1, centroidStats.mean / 8000);
   const normalizedTonality = 1 - Math.min(1, flatnessStats.mean);
   const normalizedComplexity = Math.min(1, zcrStats.std / 0.1);
-  const normalizedDynamics = Math.min(1, rmsStats.std / rmsStats.mean);
+  const normalizedDynamics = rmsStats.mean > 0 ? Math.min(1, rmsStats.std / rmsStats.mean) : 0;
 
   // === LJPW MAPPING ===
 
   // LOVE (L): Connection, melody, tonality
-  // High chroma strength, good tonality, moderate brightness
   let L = 0.5;
-  L += normalizedTonality * 0.25;        // Tonal music = more Love
-  L += chromaStrength * 0.15;            // Strong pitch content
-  L += (1 - normalizedBrightness) * 0.1; // Not too bright/harsh
+  L += normalizedTonality * 0.25;
+  L += chromaStrength * 0.15;
+  L += (1 - normalizedBrightness) * 0.1;
 
   // Adjust for key (C# = Love Key)
   if (keyInfo.key === 'C#') L += 0.1;
@@ -272,29 +289,26 @@ export function mapToLJPW(features, tempo, keyInfo) {
   L = Math.max(0.2, Math.min(0.98, L));
 
   // JUSTICE (J): Balance, structure, harmony
-  // Low dynamics variance = balanced, good tonality = structured
   let J = 0.5;
-  J += (1 - normalizedDynamics) * 0.2;   // Consistent dynamics = balanced
-  J += normalizedTonality * 0.15;         // Harmonic structure
-  J += keyInfo.confidence * 0.15;         // Clear key = structured
+  J += (1 - normalizedDynamics) * 0.2;
+  J += normalizedTonality * 0.15;
+  J += keyInfo.confidence * 0.15;
 
   J = Math.max(0.2, Math.min(0.95, J));
 
   // POWER (P): Energy, rhythm, drive
-  // High RMS, high tempo, dynamic range
   let P = 0.4;
-  P += normalizedEnergy * 0.3;           // Energy level
-  P += Math.min(1, tempo / 180) * 0.2;   // Tempo contribution
-  P += normalizedDynamics * 0.1;         // Dynamic expression
+  P += normalizedEnergy * 0.3;
+  P += Math.min(1, tempo / 180) * 0.2;
+  P += normalizedDynamics * 0.1;
 
   P = Math.max(0.2, Math.min(0.98, P));
 
   // WISDOM (W): Complexity, information, timbre
-  // Spectral complexity, MFCC variance, brightness variation
   let W = 0.5;
-  W += normalizedComplexity * 0.2;       // Timbral complexity
-  W += normalizedBrightness * 0.15;      // Spectral content
-  W += (centroidStats.std / (centroidStats.mean + 1)) * 0.15; // Brightness variation
+  W += normalizedComplexity * 0.2;
+  W += normalizedBrightness * 0.15;
+  W += (centroidStats.std / (centroidStats.mean + 1)) * 0.15;
 
   W = Math.max(0.2, Math.min(0.98, W));
 
@@ -320,6 +334,7 @@ export function generateWaveform(audioBuffer, numPoints = 200) {
 
   // Normalize
   const max = Math.max(...waveform);
+  if (max === 0) return waveform.map(() => 0);
   return waveform.map(v => v / max);
 }
 
@@ -328,18 +343,15 @@ export function generateWaveform(audioBuffer, numPoints = 200) {
  */
 export async function analyzeAudioFile(file, onProgress) {
   try {
-    onProgress?.({ stage: 'loading', progress: 0, message: 'Loading audio file...' });
+    onProgress?.({ stage: 'loading', progress: 5, message: 'Loading audio file...' });
 
     const { audioContext, audioBuffer } = await loadAudioFile(file);
 
     onProgress?.({ stage: 'extracting', progress: 20, message: 'Extracting features...' });
 
-    // Set Meyda's sample rate
-    Meyda.sampleRate = audioBuffer.sampleRate;
+    const features = extractFeatures(audioBuffer, onProgress);
 
-    const features = extractFeatures(audioBuffer, audioContext);
-
-    onProgress?.({ stage: 'analyzing', progress: 60, message: 'Detecting tempo and key...' });
+    onProgress?.({ stage: 'analyzing', progress: 65, message: 'Detecting tempo and key...' });
 
     const tempo = detectTempo(features);
     const keyInfo = detectKey(features);
@@ -355,13 +367,15 @@ export async function analyzeAudioFile(file, onProgress) {
     const dominant = getDominantDimension(ljpw.L, ljpw.J, ljpw.P, ljpw.W);
     const consciousness = calculateConsciousness(ljpw.L, ljpw.J, ljpw.P, ljpw.W);
 
+    onProgress?.({ stage: 'waveform', progress: 90, message: 'Generating waveform...' });
+
     // Generate waveform
     const waveform = generateWaveform(audioBuffer);
 
     onProgress?.({ stage: 'complete', progress: 100, message: 'Analysis complete!' });
 
     // Clean up
-    audioContext.close();
+    await audioContext.close();
 
     return {
       file: {

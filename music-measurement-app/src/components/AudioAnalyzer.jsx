@@ -16,9 +16,14 @@ function AudioAnalyzer() {
   const handleFileSelect = useCallback(async (selectedFile) => {
     if (!selectedFile) return;
 
-    // Validate file type
-    if (!selectedFile.type.includes('audio')) {
-      setError('Please select an audio file (MP3, WAV, etc.)');
+    // Validate file type - check both MIME type and extension
+    const validExtensions = ['.mp3', '.wav', '.ogg', '.flac', '.m4a', '.aac', '.webm'];
+    const fileName = selectedFile.name.toLowerCase();
+    const hasValidExtension = validExtensions.some(ext => fileName.endsWith(ext));
+    const hasAudioMime = selectedFile.type.includes('audio');
+
+    if (!hasValidExtension && !hasAudioMime) {
+      setError('Please select an audio file (MP3, WAV, OGG, FLAC, etc.)');
       return;
     }
 
@@ -26,12 +31,14 @@ function AudioAnalyzer() {
     setError(null);
     setAnalyzing(true);
     setResult(null);
+    setProgress({ stage: 'loading', progress: 0, message: 'Starting...' });
 
     try {
       const analysis = await analyzeAudioFile(selectedFile, setProgress);
       setResult(analysis);
     } catch (err) {
-      setError(err.message);
+      console.error('Analysis failed:', err);
+      setError(err.message || 'Failed to analyze audio file');
     } finally {
       setAnalyzing(false);
     }
