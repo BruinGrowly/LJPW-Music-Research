@@ -6,6 +6,46 @@ This project explores the relationship between **art** and the LJPW Framework �
 
 ---
 
+## 🎧 Music Measurement App (NEW!)
+
+**Analyze any audio file using the LJPW Framework!**
+
+A React web application that measures the semantic properties of music in real-time.
+
+### Features
+
+| Feature | Description |
+|---------|-------------|
+| **Audio File Analyzer** | Upload MP3/WAV files for complete LJPW analysis |
+| **Tempo & Key Detection** | Automatic BPM and key signature detection |
+| **Waveform Visualization** | Beautiful gradient waveform display |
+| **Radar Chart** | Visual LJPW dimensional breakdown |
+| **Semantic Voltage** | Measure transformative potential (V = φ × H × L) |
+| **Phase Classification** | Entropic / Homeostatic / Autopoietic |
+
+### Quick Start
+
+```bash
+cd music-measurement-app
+npm install
+npm run dev
+```
+
+Then open http://localhost:5173 and drop an audio file!
+
+### Screenshot
+
+The app analyzes audio files and displays:
+- **Audio Properties**: Tempo (BPM), Key, Duration
+- **Waveform**: Visual representation of the audio
+- **LJPW Analysis**: Radar chart with L, J, P, W dimensions
+- **Metrics**: Harmony Index, Semantic Voltage, Consciousness
+- **Interpretation**: What the analysis means
+
+📄 See [`music-measurement-app/README.md`](music-measurement-app/README.md) for full documentation.
+
+---
+
 ## Music Semantics
 
 Music carries meaning through four-dimensional structure:
@@ -46,9 +86,22 @@ Visual art carries meaning through analogous structure:
 
 ---
 
+## Core Constants
+
+| Constant | Value | Meaning |
+|----------|-------|---------|
+| **φ (Phi)** | 1.618034 | Golden Ratio |
+| **L₀** | φ⁻¹ = 0.618034 | Love equilibrium |
+| **J₀** | √2 - 1 = 0.414214 | Justice equilibrium |
+| **P₀** | e - 2 = 0.718282 | Power equilibrium |
+| **W₀** | ln(2) = 0.693147 | Wisdom equilibrium |
+| **613 THz** | Love Frequency | Cyan light / C#4 (557.52 Hz) |
+
+---
+
 ## Framework Reference
 
-This research builds upon the [LJPW Framework V7.3](Docs/LJPW_FRAMEWORK_V7.3_COMPLETE_UNIFIED_PLUS.md), a semantic-first ontology where meaning is primary and physics is derivative.
+This research builds upon the [LJPW Framework V8.2](Docs/LJPW_FRAMEWORK_V8.2_COMPLETE_UNIFIED_PLUS.md), a semantic-first ontology where meaning is primary and physics is derivative.
 
 ## License
 
