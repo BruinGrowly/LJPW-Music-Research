@@ -1,0 +1,419 @@
+.audio-analyzer {
+  padding: 2rem;
+}
+
+.analyzer-header {
+  margin-bottom: 2rem;
+}
+
+.analyzer-header h2 {
+  font-size: 1.5rem;
+  margin-bottom: 0.5rem;
+  color: #fff;
+}
+
+.analyzer-header p {
+  color: #a0a0a0;
+  font-size: 0.95rem;
+}
+
+/* Upload Area */
+.upload-area {
+  background: rgba(255, 255, 255, 0.02);
+  border: 2px dashed rgba(255, 255, 255, 0.15);
+  border-radius: 16px;
+  padding: 3rem 2rem;
+  text-align: center;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  margin-bottom: 2rem;
+}
+
+.upload-area:hover {
+  border-color: rgba(108, 92, 231, 0.5);
+  background: rgba(108, 92, 231, 0.05);
+}
+
+.upload-area.drag-over {
+  border-color: #6c5ce7;
+  background: rgba(108, 92, 231, 0.1);
+  transform: scale(1.01);
+}
+
+.upload-area.has-file {
+  border-style: solid;
+  padding: 1.5rem;
+}
+
+.upload-prompt {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.upload-icon {
+  font-size: 4rem;
+  margin-bottom: 1rem;
+}
+
+.upload-prompt h3 {
+  font-size: 1.3rem;
+  color: #fff;
+}
+
+.upload-prompt p {
+  color: #a0a0a0;
+  font-size: 0.95rem;
+}
+
+.file-types {
+  color: #666;
+  font-size: 0.8rem;
+  margin-top: 0.5rem;
+}
+
+/* Analyzing State */
+.analyzing-state {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1rem;
+}
+
+.spinner {
+  width: 50px;
+  height: 50px;
+  border: 3px solid rgba(255, 255, 255, 0.1);
+  border-top-color: #6c5ce7;
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
+
+.analyzing-state h3 {
+  color: #fff;
+  font-size: 1.1rem;
+}
+
+.progress-bar {
+  width: 200px;
+  height: 6px;
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 3px;
+  overflow: hidden;
+}
+
+.progress-fill {
+  height: 100%;
+  background: linear-gradient(90deg, #6c5ce7, #ff6b6b);
+  border-radius: 3px;
+  transition: width 0.3s ease;
+}
+
+.progress-percent {
+  color: #666;
+  font-size: 0.85rem;
+}
+
+/* File Info */
+.file-info {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  text-align: left;
+}
+
+.file-icon {
+  font-size: 2.5rem;
+}
+
+.file-details {
+  flex: 1;
+}
+
+.file-details h4 {
+  color: #fff;
+  font-size: 1rem;
+  margin-bottom: 0.25rem;
+  word-break: break-word;
+}
+
+.file-details span {
+  color: #666;
+  font-size: 0.85rem;
+}
+
+.change-file-btn {
+  padding: 0.5rem 1rem;
+  background: rgba(255, 255, 255, 0.1);
+  border: none;
+  color: #a0a0a0;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 0.85rem;
+  transition: all 0.2s ease;
+}
+
+.change-file-btn:hover {
+  background: rgba(255, 255, 255, 0.15);
+  color: #fff;
+}
+
+/* Error Message */
+.error-message {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 1rem 1.5rem;
+  background: rgba(255, 107, 107, 0.1);
+  border: 1px solid rgba(255, 107, 107, 0.3);
+  border-radius: 10px;
+  color: #ff6b6b;
+  margin-bottom: 2rem;
+}
+
+.error-icon {
+  font-size: 1.2rem;
+}
+
+/* Results */
+.analysis-results {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+.result-section {
+  background: rgba(255, 255, 255, 0.03);
+  border-radius: 16px;
+  padding: 1.5rem;
+  border: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.result-section h3 {
+  font-size: 1.1rem;
+  color: #fff;
+  margin-bottom: 1rem;
+}
+
+/* Audio Info */
+.audio-properties {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 2rem;
+}
+
+.property {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+}
+
+.property-label {
+  font-size: 0.75rem;
+  color: #666;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.property-value {
+  font-size: 1.2rem;
+  font-weight: 600;
+  color: #fff;
+}
+
+.confidence {
+  font-size: 0.8rem;
+  color: #666;
+  font-weight: 400;
+  margin-left: 0.5rem;
+}
+
+/* Waveform */
+.waveform-container {
+  background: rgba(0, 0, 0, 0.2);
+  border-radius: 10px;
+  padding: 1rem;
+  overflow: hidden;
+}
+
+.waveform-svg {
+  width: 100%;
+  height: 80px;
+}
+
+/* LJPW Section */
+.ljpw-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1.5rem;
+  flex-wrap: wrap;
+  gap: 1rem;
+}
+
+.phase-badge {
+  padding: 0.5rem 1rem;
+  border-radius: 20px;
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: #fff;
+}
+
+.ljpw-content {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  gap: 2rem;
+  align-items: start;
+}
+
+@media (max-width: 768px) {
+  .ljpw-content {
+    grid-template-columns: 1fr;
+  }
+}
+
+.chart-container {
+  display: flex;
+  justify-content: center;
+  background: rgba(0, 0, 0, 0.2);
+  border-radius: 12px;
+  padding: 1rem;
+}
+
+.metrics-container {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+/* Dimension Bars */
+.dimension-bars {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.dimension-bar {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+}
+
+.bar-label {
+  display: flex;
+  justify-content: space-between;
+  font-size: 0.85rem;
+}
+
+.bar-label span:last-child {
+  color: #fff;
+  font-family: 'SF Mono', 'Consolas', monospace;
+}
+
+.bar-track {
+  height: 8px;
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 4px;
+  overflow: hidden;
+}
+
+.bar-fill {
+  height: 100%;
+  border-radius: 4px;
+  transition: width 0.5s ease;
+}
+
+/* Key Metrics */
+.key-metrics {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1rem;
+}
+
+@media (max-width: 500px) {
+  .key-metrics {
+    grid-template-columns: 1fr;
+  }
+}
+
+.metric-card {
+  background: rgba(255, 255, 255, 0.03);
+  border-radius: 10px;
+  padding: 1rem;
+  text-align: center;
+}
+
+.metric-label {
+  display: block;
+  font-size: 0.75rem;
+  color: #666;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  margin-bottom: 0.5rem;
+}
+
+.metric-value {
+  font-size: 1.5rem;
+  font-weight: 700;
+  font-family: 'SF Mono', 'Consolas', monospace;
+}
+
+.metric-value.harmony {
+  color: #4ecdc4;
+}
+
+.metric-value.voltage {
+  color: #ffd93d;
+}
+
+.metric-value.consciousness {
+  color: #6c5ce7;
+}
+
+/* Dominant */
+.dominant-display {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 1rem;
+  background: rgba(255, 255, 255, 0.03);
+  border-radius: 8px;
+}
+
+.dominant-label {
+  font-size: 0.85rem;
+  color: #a0a0a0;
+}
+
+.dominant-value {
+  font-size: 1.1rem;
+  font-weight: 600;
+}
+
+/* Interpretation */
+.interpretation {
+  margin-top: 1rem;
+  padding-top: 1.5rem;
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.interpretation h4 {
+  font-size: 0.9rem;
+  color: #a0a0a0;
+  margin-bottom: 0.75rem;
+}
+
+.interpretation p {
+  color: #ccc;
+  font-size: 0.95rem;
+  line-height: 1.7;
+}
+
+.interpretation strong {
+  color: #fff;
+}

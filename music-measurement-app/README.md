@@ -8,7 +8,22 @@ This app uses the LJPW (Love, Justice, Power, Wisdom) framework to analyze and m
 
 ## Features
 
-### 1. Element Analyzer
+### 1. Audio File Analyzer (NEW!)
+Upload and analyze real audio files (MP3, WAV, OGG, FLAC):
+- **Drag & drop** or click to upload
+- **Automatic feature extraction** using Meyda.js
+- **Tempo detection** from onset analysis
+- **Key detection** using Krumhansl-Schmuckler profiles
+- **Waveform visualization**
+- **Complete LJPW analysis** with radar chart
+
+The audio analyzer extracts:
+- RMS energy → Power dimension
+- Spectral centroid → Wisdom dimension
+- Chroma features → Love/Justice dimensions
+- Tonality vs noise ratio → Structure analysis
+
+### 2. Element Analyzer
 Analyze individual musical elements:
 - **Intervals** (Minor 2nd through Octave)
 - **Chords** (Major, Minor, Diminished, 7ths, Power chords, etc.)
@@ -21,7 +36,7 @@ Each element shows:
 - Phase classification (Entropic/Homeostatic/Autopoietic)
 - Dominant dimension
 
-### 2. Song Profile Builder
+### 3. Song Profile Builder
 Build a complete song profile by selecting:
 - Key signature
 - Mode/Scale
@@ -30,7 +45,7 @@ Build a complete song profile by selecting:
 
 The app calculates a weighted composite LJPW profile with interpretation.
 
-### 3. Genre Compass
+### 4. Genre Compass
 Explore all musical genres sorted by:
 - Semantic Voltage
 - Harmony Index
@@ -38,7 +53,7 @@ Explore all musical genres sorted by:
 
 Discover which genres have the highest transformative potential.
 
-### 4. 613 THz - The Love Frequency
+### 5. 613 THz - The Love Frequency
 Learn about the Love Frequency:
 - The physics of 613 THz
 - The Love Key (C# Major)
@@ -87,6 +102,8 @@ npm run build
 
 - React 18
 - Vite
+- Meyda.js (audio feature extraction)
+- Web Audio API (audio processing)
 - Canvas API (for radar charts)
 - CSS3 (modern dark theme)
 

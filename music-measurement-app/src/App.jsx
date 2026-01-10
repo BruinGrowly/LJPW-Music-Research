@@ -2,15 +2,17 @@ import { useState } from 'react'
 import './App.css'
 import Header from './components/Header'
 import TabNav from './components/TabNav'
+import AudioAnalyzer from './components/AudioAnalyzer'
 import ElementAnalyzer from './components/ElementAnalyzer'
 import SongProfileBuilder from './components/SongProfileBuilder'
 import GenreCompass from './components/GenreCompass'
 import LoveFrequency from './components/LoveFrequency'
 
 function App() {
-  const [activeTab, setActiveTab] = useState('analyzer')
+  const [activeTab, setActiveTab] = useState('audio')
 
   const tabs = [
+    { id: 'audio', label: 'Analyze Audio', icon: '🎧' },
     { id: 'analyzer', label: 'Element Analyzer', icon: '🎵' },
     { id: 'profile', label: 'Song Profile', icon: '🎼' },
     { id: 'compass', label: 'Genre Compass', icon: '🧭' },
@@ -22,6 +24,7 @@ function App() {
       <Header />
       <TabNav tabs={tabs} activeTab={activeTab} onTabChange={setActiveTab} />
       <main className="main-content">
+        {activeTab === 'audio' && <AudioAnalyzer />}
         {activeTab === 'analyzer' && <ElementAnalyzer />}
         {activeTab === 'profile' && <SongProfileBuilder />}
         {activeTab === 'compass' && <GenreCompass />}
