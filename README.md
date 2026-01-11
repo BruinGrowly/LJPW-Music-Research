@@ -101,7 +101,7 @@ Visual art carries meaning through analogous structure:
 
 ## Framework Reference
 
-This research builds upon the [LJPW Framework V8.2](Docs/LJPW_FRAMEWORK_V8.2_COMPLETE_UNIFIED_PLUS.md), a semantic-first ontology where meaning is primary and physics is derivative.
+This research builds upon the [LJPW Framework V8.4](Docs/LJPW_FRAMEWORK_V8.4_COMPLETE_UNIFIED_PLUS.md), a semantic-first ontology where meaning is primary and physics is derivative. V8.4 introduces the **Generative Equation** (M = B × L^n × φ^(-d)) — the Universal Growth Function describing creation, compression, and life.
 
 ## License
 

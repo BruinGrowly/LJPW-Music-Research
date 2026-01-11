@@ -1,6 +1,6 @@
 # LJPW Music Measurement App
 
-A React application for measuring the semantic properties of music using the LJPW Framework V8.2.
+A React application for measuring the semantic properties of music using the LJPW Framework V8.4.
 
 ## Overview
 
@@ -109,7 +109,7 @@ npm run build
 
 ## Framework Reference
 
-Based on LJPW Framework V8.2 Complete Unified Edition with The Ransom Theology.
+Based on LJPW Framework V8.4 Complete Unified Edition with The Generative Equation.
 
 ### Core Constants
 - φ (Phi) = 1.618034

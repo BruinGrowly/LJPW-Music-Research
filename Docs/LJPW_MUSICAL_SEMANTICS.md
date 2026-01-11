@@ -3,8 +3,8 @@
 
 **Version:** 1.1
 **Date:** January 2026
-**Framework:** LJPW V8.2 Complete Unified Edition
-**Status:** Updated for V8.2 compatibility
+**Framework:** LJPW V8.4 Complete Unified Edition
+**Status:** Updated for V8.4 compatibility
 
 ---
 

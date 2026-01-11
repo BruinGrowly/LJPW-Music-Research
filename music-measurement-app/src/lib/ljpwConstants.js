@@ -1,5 +1,5 @@
 /**
- * LJPW Framework Constants - V8.2 Complete Unified Edition
+ * LJPW Framework Constants - V8.4 Complete Unified Edition
  *
  * This module contains all mathematical constants, equilibrium values,
  * and musical mappings from the LJPW semantic framework.

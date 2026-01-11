@@ -1,5 +1,5 @@
 /**
- * LJPW Measurement Engine - V8.2
+ * LJPW Measurement Engine - V8.4
  *
  * This module provides all calculation functions for measuring music
  * using the LJPW framework. The constants are hidden from the user;
