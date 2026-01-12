@@ -76,6 +76,7 @@
   width: 100%;
   height: 8px;
   -webkit-appearance: none;
+  appearance: none;
   background: rgba(255, 255, 255, 0.1);
   border-radius: 4px;
   cursor: pointer;
@@ -262,4 +263,119 @@
 .placeholder-card p {
   color: #666;
   font-size: 1rem;
+}
+
+/* Enhanced Metric Header with Tooltip */
+.metric-header {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  font-size: 0.8rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  margin-bottom: 0.5rem;
+}
+
+/* Threshold Met Indicator */
+.threshold-met {
+  display: inline-block;
+  margin-left: 4px;
+  color: #2ed573;
+  font-size: 0.9em;
+}
+
+/* Earworm Tips Section */
+.earworm-tips {
+  margin-top: 1.5rem;
+  padding: 1.5rem;
+  background: linear-gradient(135deg, rgba(255, 107, 107, 0.08), rgba(108, 92, 231, 0.08));
+  border-radius: 12px;
+  border: 1px solid rgba(108, 92, 231, 0.2);
+}
+
+.earworm-tips h4 {
+  font-size: 1rem;
+  color: #fff;
+  margin-bottom: 1rem;
+}
+
+/* Earworm Analysis */
+.earworm-analysis {
+  border-radius: 10px;
+  padding: 1rem;
+}
+
+.earworm-analysis.excellent {
+  background: linear-gradient(135deg, rgba(255, 215, 61, 0.1), rgba(255, 107, 107, 0.1));
+  border: 1px solid rgba(255, 215, 61, 0.3);
+}
+
+.earworm-analysis.high {
+  background: rgba(45, 213, 115, 0.1);
+  border: 1px solid rgba(45, 213, 115, 0.3);
+}
+
+.earworm-analysis.moderate {
+  background: rgba(255, 165, 2, 0.1);
+  border: 1px solid rgba(255, 165, 2, 0.3);
+}
+
+.earworm-analysis.low {
+  background: rgba(255, 71, 87, 0.08);
+  border: 1px solid rgba(255, 71, 87, 0.3);
+}
+
+.earworm-status {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 12px;
+}
+
+.status-label {
+  font-size: 1.1rem;
+  font-weight: 600;
+}
+
+.earworm-analysis.excellent .status-label {
+  color: #ffd93d;
+}
+
+.earworm-analysis.high .status-label {
+  color: #2ed573;
+}
+
+.earworm-analysis.moderate .status-label {
+  color: #ffa502;
+}
+
+.earworm-analysis.low .status-label {
+  color: #ff4757;
+}
+
+.earworm-tips-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.earworm-tips-list li {
+  padding: 8px 0;
+  font-size: 0.9rem;
+  color: rgba(255, 255, 255, 0.85);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+  line-height: 1.5;
+}
+
+.earworm-tips-list li:last-child {
+  border-bottom: none;
+  padding-bottom: 0;
+}
+
+.earworm-tips-list li::before {
+  content: '• ';
+  color: #6c5ce7;
+  margin-right: 4px;
 }

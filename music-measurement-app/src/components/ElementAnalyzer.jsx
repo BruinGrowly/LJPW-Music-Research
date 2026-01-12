@@ -2,12 +2,20 @@ import { useState } from 'react'
 import './ElementAnalyzer.css'
 import RadarChart from './RadarChart'
 import HarmonyGauge from './HarmonyGauge'
+import HelpTooltip, { InfoIcon } from './HelpTooltip'
 import {
   analyzeInterval,
   analyzeChord,
   analyzeMode,
 } from '../lib/ljpwEngine'
 import { INTERVALS, CHORDS, MODES } from '../lib/ljpwConstants'
+import {
+  DIMENSION_EXPLANATIONS,
+  METRIC_EXPLANATIONS,
+  INTERVAL_INSIGHTS,
+  CHORD_INSIGHTS,
+  MODE_INSIGHTS,
+} from '../lib/explanationData'
 
 function ElementAnalyzer() {
   const [elementType, setElementType] = useState('interval')
@@ -54,6 +62,20 @@ function ElementAnalyzer() {
     }
   }
 
+  // Get insight for the selected element
+  const getInsight = () => {
+    switch (elementType) {
+      case 'interval':
+        return INTERVAL_INSIGHTS[selectedElement]
+      case 'chord':
+        return CHORD_INSIGHTS[selectedElement]
+      case 'mode':
+        return MODE_INSIGHTS[selectedElement]
+      default:
+        return null
+    }
+  }
+
   // Set default selection when type changes
   const handleTypeChange = (type) => {
     setElementType(type)
@@ -71,16 +93,29 @@ function ElementAnalyzer() {
     }
   }
 
+  const insight = getInsight()
+
   return (
     <div className="element-analyzer">
       <div className="analyzer-header">
         <h2>Musical Element Analyzer</h2>
-        <p>Select a musical element to see its semantic profile</p>
+        <p>Select a musical element to see its semantic profile and learn what it means</p>
       </div>
 
       <div className="analyzer-controls">
         <div className="control-group">
-          <label>Element Type</label>
+          <label>
+            Element Type
+            <HelpTooltip
+              title="Element Types"
+              content="Intervals: Distance between two notes
+Chords: Multiple notes played together
+Modes: Scales that define the tonal character"
+              position="right"
+            >
+              <InfoIcon color="#6c5ce7" size={14} />
+            </HelpTooltip>
+          </label>
           <div className="type-buttons">
             <button
               className={elementType === 'interval' ? 'active' : ''}
@@ -122,6 +157,13 @@ function ElementAnalyzer() {
         </button>
       </div>
 
+      {/* Insight Preview */}
+      {insight && (
+        <div className="insight-preview">
+          <div className="insight-summary">{insight.summary}</div>
+        </div>
+      )}
+
       {analysis && (
         <div className="analysis-results">
           <div className="result-header">
@@ -147,10 +189,30 @@ function ElementAnalyzer() {
 
             <div className="metrics-section">
               <div className="dimension-bars">
-                <DimensionBar label="Love" value={analysis.L} color="#ff6b6b" />
-                <DimensionBar label="Justice" value={analysis.J} color="#4ecdc4" />
-                <DimensionBar label="Power" value={analysis.P} color="#ffd93d" />
-                <DimensionBar label="Wisdom" value={analysis.W} color="#6c5ce7" />
+                <DimensionBar
+                  label="Love"
+                  dim="L"
+                  value={analysis.L}
+                  color="#ff6b6b"
+                />
+                <DimensionBar
+                  label="Justice"
+                  dim="J"
+                  value={analysis.J}
+                  color="#4ecdc4"
+                />
+                <DimensionBar
+                  label="Power"
+                  dim="P"
+                  value={analysis.P}
+                  color="#ffd93d"
+                />
+                <DimensionBar
+                  label="Wisdom"
+                  dim="W"
+                  value={analysis.W}
+                  color="#6c5ce7"
+                />
               </div>
 
               <HarmonyGauge
@@ -160,7 +222,16 @@ function ElementAnalyzer() {
               />
 
               <div className="dominant-section">
-                <span className="dominant-label">Dominant Dimension:</span>
+                <span className="dominant-label">
+                  Dominant Dimension:
+                  <HelpTooltip
+                    title="What's the Dominant Dimension?"
+                    content="The highest-valued dimension determines the 'character' of this element. A Love-dominant element creates emotional connection; Power-dominant brings energy."
+                    position="top"
+                  >
+                    <InfoIcon color="#6c5ce7" size={14} />
+                  </HelpTooltip>
+                </span>
                 <span
                   className="dominant-value"
                   style={{ color: analysis.dominant.color }}
@@ -174,17 +245,61 @@ function ElementAnalyzer() {
           <div className="phase-description">
             {analysis.phase.description}
           </div>
+
+          {/* What This Means For Your Music */}
+          <div className="usage-guide">
+            <h4>🎯 What This Means For Your Music</h4>
+
+            {insight ? (
+              <div className="insight-content">
+                <p className="insight-main">{insight.insight}</p>
+                <div className="insight-uses">
+                  <strong>Best Uses:</strong> {insight.uses}
+                </div>
+              </div>
+            ) : (
+              <div className="insight-content">
+                <p>
+                  {analysis.dominant.name === 'Love' &&
+                    'This element creates strong emotional connection. Use it for memorable melodies and hooks.'}
+                  {analysis.dominant.name === 'Justice' &&
+                    'This element provides stability and structure. Use it for foundation and harmonic clarity.'}
+                  {analysis.dominant.name === 'Power' &&
+                    'This element brings energy and drive. Use it for dynamic, exciting passages.'}
+                  {analysis.dominant.name === 'Wisdom' &&
+                    'This element adds depth and complexity. Use it for sophisticated, interesting moments.'}
+                </p>
+              </div>
+            )}
+
+            {/* Earworm Indicator */}
+            <div className="earworm-indicator">
+              <span className="earworm-label">Earworm Potential:</span>
+              <EarwormRating L={analysis.L} H={analysis.H} V={analysis.V} />
+            </div>
+          </div>
         </div>
       )}
     </div>
   )
 }
 
-function DimensionBar({ label, value, color }) {
+function DimensionBar({ label, dim, value, color }) {
+  const explanation = DIMENSION_EXPLANATIONS[dim]
+
   return (
     <div className="dimension-bar">
       <div className="bar-label">
-        <span>{label}</span>
+        <span>
+          {label}
+          <HelpTooltip
+            title={explanation.name}
+            content={explanation.shortDesc + '\n\n' + explanation.whatItMeans.substring(0, 200) + '...'}
+            position="right"
+          >
+            <InfoIcon color={color} size={12} />
+          </HelpTooltip>
+        </span>
         <span style={{ color }}>{value.toFixed(2)}</span>
       </div>
       <div className="bar-track">
@@ -195,7 +310,61 @@ function DimensionBar({ label, value, color }) {
             background: color,
           }}
         />
+        {/* Threshold marker for Love */}
+        {dim === 'L' && (
+          <div className="threshold-marker" style={{ left: '70%' }} title="Earworm threshold (0.7)" />
+        )}
       </div>
+    </div>
+  )
+}
+
+function EarwormRating({ L, H, V }) {
+  // Calculate earworm potential
+  let rating = 0
+  let label = ''
+  let className = ''
+
+  if (L >= 0.7 && H >= 0.6) {
+    if (V > 1.0) {
+      rating = 5
+      label = '🌟 Extremely High'
+      className = 'excellent'
+    } else if (V > 0.8) {
+      rating = 4
+      label = '✨ High'
+      className = 'high'
+    } else {
+      rating = 3
+      label = '👍 Good'
+      className = 'good'
+    }
+  } else if (L >= 0.6 || H >= 0.5) {
+    rating = 2
+    label = '😐 Moderate'
+    className = 'moderate'
+  } else {
+    rating = 1
+    label = '🔇 Low'
+    className = 'low'
+  }
+
+  return (
+    <div className={`earworm-rating ${className}`}>
+      <span className="rating-label">{label}</span>
+      <HelpTooltip
+        title="Earworm Potential"
+        content={`Love (L) = ${L.toFixed(2)} ${L >= 0.7 ? '✓' : '✗ needs ≥0.7'}
+Harmony (H) = ${H.toFixed(2)} ${H >= 0.6 ? '✓' : '✗ needs ≥0.6'}
+Voltage (V) = ${V.toFixed(2)}
+
+${L >= 0.7 && H >= 0.6
+            ? 'This element has earworm potential!'
+            : 'Increase Love and Harmony for earworm potential.'}`}
+        position="left"
+      >
+        <InfoIcon color="#6c5ce7" size={14} />
+      </HelpTooltip>
     </div>
   )
 }

@@ -2,8 +2,10 @@ import { useState } from 'react'
 import './SongProfileBuilder.css'
 import RadarChart from './RadarChart'
 import HarmonyGauge from './HarmonyGauge'
+import HelpTooltip, { InfoIcon } from './HelpTooltip'
 import { analyzeSongProfile } from '../lib/ljpwEngine'
 import { KEYS, MODES, GENRES } from '../lib/ljpwConstants'
+import { DIMENSION_EXPLANATIONS, METRIC_EXPLANATIONS } from '../lib/explanationData'
 
 function SongProfileBuilder() {
   const [profile, setProfile] = useState({
@@ -125,24 +127,28 @@ function SongProfileBuilder() {
               <div className="metrics-grid">
                 <MetricCard
                   label="Love"
+                  dimension="L"
                   value={analysis.L}
                   color="#ff6b6b"
                   description="Connection & melody"
                 />
                 <MetricCard
                   label="Justice"
+                  dimension="J"
                   value={analysis.J}
                   color="#4ecdc4"
                   description="Structure & balance"
                 />
                 <MetricCard
                   label="Power"
+                  dimension="P"
                   value={analysis.P}
                   color="#ffd93d"
                   description="Energy & drive"
                 />
                 <MetricCard
                   label="Wisdom"
+                  dimension="W"
                   value={analysis.W}
                   color="#6c5ce7"
                   description="Complexity & depth"
@@ -183,8 +189,14 @@ function SongProfileBuilder() {
               </div>
 
               <div className="interpretation">
-                <h4>Interpretation</h4>
+                <h4>🎯 Interpretation</h4>
                 <p>{getInterpretation(analysis)}</p>
+              </div>
+
+              {/* Earworm Tips */}
+              <div className="earworm-tips">
+                <h4>🎵 Earworm Potential</h4>
+                <EarwormAnalysis analysis={analysis} />
               </div>
             </div>
           ) : (
@@ -199,14 +211,88 @@ function SongProfileBuilder() {
   )
 }
 
-function MetricCard({ label, value, color, description }) {
+function MetricCard({ label, value, color, description, dimension }) {
+  const dimKey = dimension || label[0]
+  const explanation = DIMENSION_EXPLANATIONS[dimKey]
+
   return (
     <div className="metric-card" style={{ borderColor: color }}>
       <div className="metric-header" style={{ color }}>
         {label}
+        {explanation && (
+          <HelpTooltip
+            title={explanation.name}
+            content={explanation.shortDesc + '\n\n' + explanation.earwormConnection}
+            position="top"
+          >
+            <InfoIcon color={color} size={14} />
+          </HelpTooltip>
+        )}
       </div>
-      <div className="metric-value-large">{value.toFixed(2)}</div>
+      <div className="metric-value-large">
+        {value.toFixed(2)}
+        {dimKey === 'L' && value >= 0.7 && <span className="threshold-met">✓</span>}
+      </div>
       <div className="metric-desc">{description}</div>
+    </div>
+  )
+}
+
+function EarwormAnalysis({ analysis }) {
+  const { L, H, V, phase } = analysis
+  const isAutopoietic = phase.phase === 'AUTOPOIETIC'
+  const hasEarwormPotential = L >= 0.7 && H >= 0.6
+
+  let status, tips
+
+  if (V > 1.0 && hasEarwormPotential) {
+    status = { label: '🌟 Extremely High', className: 'excellent' }
+    tips = [
+      'This configuration has maximum earworm potential!',
+      'The combination of high Love and Voltage makes this highly memorable.',
+      'Consider recording and testing with listeners.',
+    ]
+  } else if (hasEarwormPotential) {
+    status = { label: '✨ High', className: 'high' }
+    tips = [
+      'Strong earworm potential achieved!',
+      'Focus on a catchy, singable hook.',
+      `To boost further: ${V < 1.0 ? 'increase Love or Harmony to boost Voltage' : 'you\'re already optimal!'}`
+    ]
+  } else if (L >= 0.6 && H >= 0.5) {
+    status = { label: '👍 Moderate', className: 'moderate' }
+    tips = [
+      `Love is ${L.toFixed(2)} — needs to reach 0.7 for earworm threshold.`,
+      'Try switching to a more Love-dominant mode (Ionian) or genre (Pop, Gospel).',
+      'Consider using more major 3rd intervals in your melody.',
+    ]
+  } else {
+    status = { label: '🔧 Needs Work', className: 'low' }
+    tips = [
+      `Current Love: ${L.toFixed(2)} (need ≥0.7) | Harmony: ${H.toFixed(2)} (need ≥0.6)`,
+      'Switch to C# Major (Love Key) for instant Love boost.',
+      'Choose Pop, Gospel, or R&B genre for higher Love values.',
+      'Use Ionian (major) mode instead of minor modes.',
+    ]
+  }
+
+  return (
+    <div className={`earworm-analysis ${status.className}`}>
+      <div className="earworm-status">
+        <span className="status-label">{status.label}</span>
+        <HelpTooltip
+          title="Earworm Formula"
+          content={`Love (L) ≥ 0.7: ${L >= 0.7 ? '✓' : '✗'}\nHarmony (H) ≥ 0.6: ${H >= 0.6 ? '✓' : '✗'}\nVoltage (V) = ${V.toFixed(2)}\n\nBoth conditions must be met for earworm potential.`}
+          position="left"
+        >
+          <InfoIcon color="#6c5ce7" size={14} />
+        </HelpTooltip>
+      </div>
+      <ul className="earworm-tips-list">
+        {tips.map((tip, i) => (
+          <li key={i}>{tip}</li>
+        ))}
+      </ul>
     </div>
   )
 }

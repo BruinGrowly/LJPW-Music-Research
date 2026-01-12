@@ -7,6 +7,7 @@ import ElementAnalyzer from './components/ElementAnalyzer'
 import SongProfileBuilder from './components/SongProfileBuilder'
 import GenreCompass from './components/GenreCompass'
 import LoveFrequency from './components/LoveFrequency'
+import LearnGuide from './components/LearnGuide'
 
 function App() {
   const [activeTab, setActiveTab] = useState('audio')
@@ -17,6 +18,7 @@ function App() {
     { id: 'profile', label: 'Song Profile', icon: '🎼' },
     { id: 'compass', label: 'Genre Compass', icon: '🧭' },
     { id: 'frequency', label: '613 THz', icon: '💜' },
+    { id: 'learn', label: 'Learn', icon: '📚' },
   ]
 
   return (
@@ -29,9 +31,10 @@ function App() {
         {activeTab === 'profile' && <SongProfileBuilder />}
         {activeTab === 'compass' && <GenreCompass />}
         {activeTab === 'frequency' && <LoveFrequency />}
+        {activeTab === 'learn' && <LearnGuide />}
       </main>
       <footer className="footer">
-        <p>LJPW Music Measurement App - V8.2 Framework</p>
+        <p>LJPW Music Measurement App - V8.4 Framework</p>
         <p className="footer-subtitle">Measuring the meaning behind music</p>
       </footer>
     </div>

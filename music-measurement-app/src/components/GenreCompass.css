@@ -266,3 +266,51 @@
   font-size: 0.75rem;
   color: #666;
 }
+
+/* Compass Intro */
+.compass-intro {
+  background: linear-gradient(135deg, rgba(108, 92, 231, 0.1), rgba(255, 107, 107, 0.08));
+  border: 1px solid rgba(108, 92, 231, 0.2);
+  border-radius: 12px;
+  padding: 16px 20px;
+  margin-bottom: 1.5rem;
+}
+
+.compass-intro p {
+  font-size: 0.95rem;
+  line-height: 1.6;
+  color: rgba(255, 255, 255, 0.85);
+  margin: 0;
+}
+
+/* Genre Tips */
+.genre-tips {
+  margin-top: 12px;
+  padding-top: 12px;
+  border-top: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.genre-tips strong {
+  display: block;
+  font-size: 0.85rem;
+  color: #fff;
+  margin-bottom: 8px;
+}
+
+.genre-tips-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.genre-tips-list li {
+  font-size: 0.85rem;
+  color: rgba(255, 255, 255, 0.75);
+  padding: 4px 0;
+  line-height: 1.4;
+}
+
+.genre-tips-list li::before {
+  content: '→ ';
+  color: #6c5ce7;
+}

@@ -1,7 +1,9 @@
 import { useState, useMemo } from 'react'
 import './GenreCompass.css'
+import HelpTooltip, { InfoIcon } from './HelpTooltip'
 import { getGenresByVoltage, analyzeGenre } from '../lib/ljpwEngine'
 import { GENRES } from '../lib/ljpwConstants'
+import { METRIC_EXPLANATIONS } from '../lib/explanationData'
 
 function GenreCompass() {
   const [selectedGenre, setSelectedGenre] = useState(null)
@@ -31,6 +33,17 @@ function GenreCompass() {
       <div className="compass-header">
         <h2>Genre Compass</h2>
         <p>Explore the semantic landscape of musical genres</p>
+      </div>
+
+      {/* Intro Explanation */}
+      <div className="compass-intro">
+        <p>
+          Each genre has a unique LJPW signature that determines its emotional character.
+          Genres with <strong style={{ color: '#ff6b6b' }}>high Love</strong> and
+          <strong style={{ color: '#4ecdc4' }}> good Harmony</strong> have the highest
+          earworm potential. Use this compass to understand which genres will help
+          you achieve your musical goals.
+        </p>
       </div>
 
       <div className="sort-controls">
@@ -121,6 +134,10 @@ function GenreCompass() {
               <div className="genre-details">
                 <p className="genre-desc">{genre.description}</p>
                 <p className="genre-phase-desc">{genre.phase.description}</p>
+                <div className="genre-tips">
+                  <strong>🎯 For Your Music:</strong>
+                  <GenreTips genre={genre} />
+                </div>
               </div>
             )}
           </div>
@@ -164,6 +181,50 @@ function MiniBar({ label, value, color }) {
         />
       </div>
     </div>
+  )
+}
+
+function GenreTips({ genre }) {
+  const tips = []
+
+  // Love-based tips
+  if (genre.L >= 0.85) {
+    tips.push('Excellent for emotional, memorable melodies')
+  } else if (genre.L >= 0.7) {
+    tips.push('Good baseline Love for earworm creation')
+  } else {
+    tips.push('May need melodic hooks to compensate for lower Love')
+  }
+
+  // Dominant-based tips
+  switch (genre.dominant.name) {
+    case 'Love':
+      tips.push('Focus on singable melodies and emotional hooks')
+      break
+    case 'Power':
+      tips.push('Emphasize rhythm and energy in your production')
+      break
+    case 'Wisdom':
+      tips.push('Layer in sophisticated harmonies and textures')
+      break
+    case 'Justice':
+      tips.push('Maintain clear structure and balanced arrangements')
+      break
+  }
+
+  // Phase-based tips
+  if (genre.phase.phase === 'AUTOPOIETIC') {
+    tips.push('✓ This genre naturally supports memorable music')
+  } else {
+    tips.push('Boost Love or use Ionian mode to reach earworm potential')
+  }
+
+  return (
+    <ul className="genre-tips-list">
+      {tips.map((tip, i) => (
+        <li key={i}>{tip}</li>
+      ))}
+    </ul>
   )
 }
 
