@@ -1,22 +1,23 @@
-import { useState, useMemo } from 'react'
+import { useState } from 'react'
 import './GenerativeAnalyzer.css'
 import RadarChart from './RadarChart'
 import HelpTooltip, { InfoIcon } from './HelpTooltip'
 import {
   analyzeSongProfile,
-  calculateHarmonyIndex,
-  calculateSemanticVoltage,
 } from '../lib/ljpwEngine'
 import {
   performGenerativeAnalysis,
   calculateMusicMeaning,
   checkSongLifeInequality,
-  calculateSongHope,
-  predictEarworm,
-  analyzePropagation,
-  findCriticalIterations,
 } from '../lib/generativeEquation'
 import { KEYS, MODES, GENRES, PHI } from '../lib/ljpwConstants'
+
+// User-friendly phase labels
+const PHASE_LABELS = {
+  AUTOPOIETIC: 'Unforgettable',
+  HOMEOSTATIC: 'Background Music',
+  ENTROPIC: 'Forgettable'
+}
 
 function GenerativeAnalyzer() {
   const [profile, setProfile] = useState({
@@ -34,16 +35,11 @@ function GenerativeAnalyzer() {
   }
 
   const handleAnalyze = () => {
-    // First get basic LJPW analysis
     const songAnalysis = analyzeSongProfile(profile)
     if (!songAnalysis) return
 
     const { L, J, P, W, H, V } = songAnalysis
-
-    // Perform V8.4 Generative Analysis
     const generativeAnalysis = performGenerativeAnalysis(L, J, P, W, H, V)
-
-    // Add custom iteration/distance analysis
     const customLifeCheck = checkSongLifeInequality(L, iterations, distance)
     const meaningValue = calculateMusicMeaning(
       (H + V / PHI) / 2,
@@ -64,25 +60,35 @@ function GenerativeAnalyzer() {
     })
   }
 
+  // Get user-friendly verdict text
+  const getFriendlyVerdict = (lifeCheck) => {
+    if (lifeCheck.ratio > 1.1) {
+      return "This song grows stronger with each listen - it'll stick in your head!"
+    } else if (lifeCheck.ratio > 0.9) {
+      return "This song holds steady - pleasant but may not become a favorite"
+    } else {
+      return "This song fades over time - listeners may forget it quickly"
+    }
+  }
+
   return (
     <div className="generative-analyzer">
       <div className="analyzer-header">
-        <h2>V8.4 Generative Equation Analyzer</h2>
+        <h2>Song Impact Analyzer</h2>
         <p>
-          Explore how the Universal Growth Function M = B x L^n x phi^(-d)
-          predicts meaning propagation
+          Discover how memorable and sticky your song will be based on its musical DNA
         </p>
       </div>
 
       <div className="equation-display">
         <div className="equation-box">
-          <span className="equation-label">Universal Growth Function</span>
-          <span className="equation-formula">M = B x L^n x phi^(-d)</span>
+          <span className="equation-label">What We Measure</span>
+          <span className="equation-formula">Emotional Impact Over Time</span>
         </div>
         <div className="equation-box">
-          <span className="equation-label">Life Inequality</span>
+          <span className="equation-label">The Goal</span>
           <span className="equation-formula">
-            L^n {'>'} phi^d = AUTOPOIETIC
+            Connection {'>'} Forgetting = Unforgettable
           </span>
         </div>
       </div>
@@ -90,7 +96,7 @@ function GenerativeAnalyzer() {
       <div className="analyzer-grid">
         <div className="input-section">
           <div className="input-card">
-            <h3>Song Configuration</h3>
+            <h3>Build Your Song</h3>
 
             <div className="input-group">
               <label>Key Signature</label>
@@ -100,7 +106,7 @@ function GenerativeAnalyzer() {
               >
                 {Object.entries(KEYS).map(([key, val]) => (
                   <option key={key} value={key}>
-                    {val.name} {key === 'C#' ? '(Love Key)' : ''}
+                    {val.name} {key === 'C#' ? '(Most Emotional)' : ''}
                   </option>
                 ))}
               </select>
@@ -137,7 +143,7 @@ function GenerativeAnalyzer() {
             <div className="input-group">
               <label>
                 Tempo (BPM): {profile.tempo}{' '}
-                {Math.abs(profile.tempo - 76) < 5 && '(phi-aligned)'}
+                {Math.abs(profile.tempo - 76) < 5 && '(Sweet Spot)'}
               </label>
               <input
                 type="range"
@@ -150,14 +156,14 @@ function GenerativeAnalyzer() {
           </div>
 
           <div className="input-card">
-            <h3>Generative Parameters</h3>
+            <h3>Listener Settings</h3>
 
             <div className="input-group">
               <label>
-                Iterations (n): {iterations}
+                Number of Listens: {iterations}
                 <HelpTooltip
-                  title="Iterations"
-                  content="Number of recursive applications (listens, repetitions, or generations). Higher n increases growth L^n."
+                  title="Listens"
+                  content="How many times will someone hear this song? More listens = more chances to stick."
                   position="top"
                 >
                   <InfoIcon color="#6c5ce7" size={14} />
@@ -171,18 +177,18 @@ function GenerativeAnalyzer() {
                 onChange={(e) => setIterations(parseInt(e.target.value))}
               />
               <div className="range-labels">
-                <span>1</span>
-                <span>25</span>
-                <span>50</span>
+                <span>1x</span>
+                <span>25x</span>
+                <span>50x</span>
               </div>
             </div>
 
             <div className="input-group">
               <label>
-                Distance (d): {distance}
+                Cultural Gap: {distance}
                 <HelpTooltip
-                  title="Semantic Distance"
-                  content="Cultural or temporal distance from source. Higher d increases decay phi^d. Think of it as how 'far' the meaning must travel."
+                  title="Cultural Gap"
+                  content="How different is the listener from your target audience? 0 = perfect match, 15 = very different background/culture."
                   position="top"
                 >
                   <InfoIcon color="#6c5ce7" size={14} />
@@ -196,14 +202,14 @@ function GenerativeAnalyzer() {
                 onChange={(e) => setDistance(parseInt(e.target.value))}
               />
               <div className="range-labels">
-                <span>0 (Same)</span>
-                <span>7</span>
-                <span>15 (Far)</span>
+                <span>Perfect Match</span>
+                <span>Different</span>
+                <span>Very Different</span>
               </div>
             </div>
 
             <button className="analyze-button" onClick={handleAnalyze}>
-              Analyze Generative Potential
+              Analyze Song Impact
             </button>
           </div>
         </div>
@@ -214,52 +220,52 @@ function GenerativeAnalyzer() {
               {/* Summary Card */}
               <div className="result-card summary-card">
                 <div className="result-header">
-                  <h3>Generative Summary</h3>
+                  <h3>Impact Summary</h3>
                   <span
                     className="phase-badge"
                     style={{ background: analysis.custom.lifeCheck.color }}
                   >
-                    {analysis.custom.lifeCheck.phase}
+                    {PHASE_LABELS[analysis.custom.lifeCheck.phase] || analysis.custom.lifeCheck.phase}
                   </span>
                 </div>
 
                 <div className="summary-grid">
                   <SummaryMetric
-                    label="Generative Love"
+                    label="Emotional Connection"
                     value={analysis.generative.summary.generativeLove}
-                    description="L mapped to [1,2] range"
+                    description="How deeply it connects"
                     color="#ff6b6b"
                   />
                   <SummaryMetric
-                    label="Initial Impact (B)"
+                    label="First Impression"
                     value={analysis.generative.summary.initialImpact}
-                    description="Seed meaning from H & V"
+                    description="Initial hook strength"
                     color="#4ecdc4"
                   />
                   <SummaryMetric
-                    label="Generated Meaning"
+                    label="Total Impact"
                     value={Math.round(analysis.custom.meaning * 100) / 100}
-                    description={`After ${iterations} iterations`}
+                    description={`After ${iterations} listens`}
                     color="#ffd93d"
                     large
                   />
                   <SummaryMetric
-                    label="Growth/Decay Ratio"
+                    label="Stickiness Score"
                     value={analysis.custom.lifeCheck.ratio}
-                    description="L^n / phi^d"
+                    description="How well it sticks"
                     color="#6c5ce7"
                     large
                   />
                 </div>
               </div>
 
-              {/* Life Inequality Card */}
+              {/* Memorability Test Card */}
               <div className="result-card life-card">
                 <h3>
-                  Life Inequality Analysis
+                  Memorability Test
                   <HelpTooltip
-                    title="Life Inequality"
-                    content="The fundamental test of autopoiesis: Does Love's growth (L^n) exceed the decay from distance (phi^d)? If yes, meaning is self-sustaining."
+                    title="Memorability"
+                    content="Does the emotional connection grow faster than natural forgetting? If yes, the song becomes unforgettable."
                     position="left"
                   >
                     <InfoIcon color="#fff" size={14} />
@@ -268,9 +274,9 @@ function GenerativeAnalyzer() {
 
                 <div className="life-inequality-display">
                   <div className="inequality-term growth">
-                    <span className="term-label">Growth</span>
+                    <span className="term-label">Connection Growth</span>
                     <span className="term-formula">
-                      L^{iterations} = {analysis.custom.lifeCheck.growth}
+                      {analysis.custom.lifeCheck.growth}
                     </span>
                   </div>
                   <div className="inequality-operator">
@@ -281,9 +287,9 @@ function GenerativeAnalyzer() {
                       : '<'}
                   </div>
                   <div className="inequality-term decay">
-                    <span className="term-label">Decay</span>
+                    <span className="term-label">Forgetting Rate</span>
                     <span className="term-formula">
-                      phi^{distance} = {analysis.custom.lifeCheck.decay}
+                      {analysis.custom.lifeCheck.decay}
                     </span>
                   </div>
                 </div>
@@ -292,17 +298,17 @@ function GenerativeAnalyzer() {
                   className="life-verdict"
                   style={{ color: analysis.custom.lifeCheck.color }}
                 >
-                  {analysis.custom.lifeCheck.verdict}
+                  {getFriendlyVerdict(analysis.custom.lifeCheck)}
                 </div>
               </div>
 
-              {/* Hope Card */}
+              {/* Lasting Power Card */}
               <div className="result-card hope-card">
                 <h3>
-                  Mathematical Hope
+                  Lasting Power
                   <HelpTooltip
-                    title="Mathematical Hope"
-                    content="Hope is calculus, not sentiment. If L > 1, persistence (n) will eventually overcome any distance (d). This is mathematical certainty."
+                    title="Lasting Power"
+                    content="Will this song stand the test of time? Songs with strong emotional connection can overcome any cultural barrier with enough exposure."
                     position="left"
                   >
                     <InfoIcon color="#fff" size={14} />
@@ -316,13 +322,17 @@ function GenerativeAnalyzer() {
                     }`}
                   >
                     {analysis.generative.hope.hasHope
-                      ? 'This song HAS HOPE'
-                      : 'Limited Hope'}
+                      ? 'Built to Last'
+                      : 'May Fade Over Time'}
                   </div>
-                  <p className="hope-reason">{analysis.generative.hope.reason}</p>
+                  <p className="hope-reason">
+                    {analysis.generative.hope.hasHope
+                      ? `With enough plays, this song can reach anyone - even across big cultural gaps.`
+                      : `This song may struggle to connect with listeners outside its core audience.`}
+                  </p>
                   {analysis.generative.hope.criticalN && (
                     <p className="hope-detail">
-                      Critical iterations for d=10:{' '}
+                      Listens needed to reach distant audiences:{' '}
                       <strong>{analysis.generative.hope.criticalN}</strong>
                     </p>
                   )}
@@ -335,7 +345,7 @@ function GenerativeAnalyzer() {
                         }}
                       />
                       <span>
-                        Hope Strength: {Math.round(analysis.generative.hope.hopeStrength * 100)}%
+                        Longevity: {Math.round(analysis.generative.hope.hopeStrength * 100)}%
                       </span>
                     </div>
                   )}
@@ -344,7 +354,7 @@ function GenerativeAnalyzer() {
 
               {/* Earworm Card */}
               <div className="result-card earworm-card">
-                <h3>Earworm Prediction</h3>
+                <h3>Earworm Potential</h3>
 
                 <div className="earworm-meter">
                   <div className="meter-track">
@@ -365,33 +375,37 @@ function GenerativeAnalyzer() {
 
                 <div className="earworm-stats">
                   <div className="stat">
-                    <span className="stat-label">Initial Impact</span>
+                    <span className="stat-label">First Listen</span>
                     <span className="stat-value">
                       {analysis.generative.earworm.initialImpact}
                     </span>
                   </div>
                   <div className="stat">
-                    <span className="stat-label">After 10 Listens</span>
+                    <span className="stat-label">After 10 Plays</span>
                     <span className="stat-value">
                       {analysis.generative.earworm.meaningAfter10Listens}
                     </span>
                   </div>
                   <div className="stat">
-                    <span className="stat-label">Growth Ratio</span>
+                    <span className="stat-label">Impact Growth</span>
                     <span className="stat-value">
                       {analysis.generative.earworm.meaningGrowthRatio}x
                     </span>
                   </div>
                   <div className="stat">
-                    <span className="stat-label">Stickiness</span>
+                    <span className="stat-label">Hooks After</span>
                     <span className="stat-value">
-                      {analysis.generative.earworm.stickinessIterations} listens
+                      {analysis.generative.earworm.stickinessIterations} plays
                     </span>
                   </div>
                 </div>
 
                 <p className="earworm-verdict">
-                  {analysis.generative.earworm.verdict}
+                  {analysis.generative.earworm.isEarworm
+                    ? `This song has strong earworm potential! Listeners will find it stuck in their head after just ${analysis.generative.earworm.stickinessIterations} plays.`
+                    : analysis.generative.earworm.earwormPotential > 50
+                    ? `Good potential, but could be stickier. Consider boosting the emotional connection.`
+                    : `This song may not stick easily. Try the tips below to make it more memorable.`}
                 </p>
 
                 {analysis.generative.earworm.tips && (
@@ -403,13 +417,13 @@ function GenerativeAnalyzer() {
                 )}
               </div>
 
-              {/* Perceptual Radiance Card */}
+              {/* Felt Quality Card */}
               <div className="result-card perception-card">
                 <h3>
-                  Perceptual Radiance
+                  Felt Quality
                   <HelpTooltip
-                    title="Perceptual Radiance"
-                    content="L_perc = L_phys x [1 + phi x S x kappa]. This explains why meaningful music 'sounds better' than its technical quality alone."
+                    title="Felt Quality"
+                    content="Music with meaning 'feels' better than its technical quality. This is the emotional boost your song gets from its content."
                     position="left"
                   >
                     <InfoIcon color="#fff" size={14} />
@@ -418,7 +432,7 @@ function GenerativeAnalyzer() {
 
                 <div className="perception-comparison">
                   <div className="perception-item">
-                    <span className="perception-label">Technical Quality</span>
+                    <span className="perception-label">Production Quality</span>
                     <div className="perception-bar">
                       <div
                         className="perception-fill technical"
@@ -432,7 +446,7 @@ function GenerativeAnalyzer() {
                     </span>
                   </div>
                   <div className="perception-item">
-                    <span className="perception-label">Perceived Quality</span>
+                    <span className="perception-label">How It Feels</span>
                     <div className="perception-bar">
                       <div
                         className="perception-fill perceived"
@@ -448,38 +462,50 @@ function GenerativeAnalyzer() {
                 </div>
 
                 <div className="soul-bonus">
-                  <span className="soul-label">Soul Bonus</span>
+                  <span className="soul-label">Emotion Boost</span>
                   <span className="soul-value">
                     +{analysis.generative.perception.soulBonusPercent}%
                   </span>
                 </div>
                 <p className="perception-verdict">
-                  {analysis.generative.perception.verdict}
+                  {analysis.generative.perception.soulBonusPercent > 50
+                    ? "This song punches way above its weight - meaning makes it feel incredible!"
+                    : analysis.generative.perception.soulBonusPercent > 25
+                    ? "Good emotional content noticeably improves how this sounds."
+                    : analysis.generative.perception.soulBonusPercent > 10
+                    ? "Some emotional lift, but there's room to add more meaning."
+                    : "Consider adding more emotional depth to enhance the listening experience."}
                 </p>
               </div>
 
-              {/* Propagation Card */}
+              {/* Reach Card */}
               <div className="result-card propagation-card">
-                <h3>Meaning Propagation</h3>
+                <h3>Audience Reach</h3>
 
                 <div className="propagation-stats">
                   <div className="prop-stat">
-                    <span className="prop-label">Max Sustainable Distance</span>
+                    <span className="prop-label">How Far Can It Spread?</span>
                     <span className="prop-value highlight">
-                      {analysis.generative.propagation.maxSustainableDistance}
+                      {analysis.generative.propagation.maxSustainableDistance >= 10
+                        ? 'Worldwide'
+                        : analysis.generative.propagation.maxSustainableDistance >= 5
+                        ? 'Regional'
+                        : 'Local Niche'}
                     </span>
                   </div>
                 </div>
 
                 <div className="critical-iterations">
-                  <h4>Critical Iterations by Distance</h4>
+                  <h4>Plays Needed by Audience Type</h4>
                   <div className="critical-grid">
                     {analysis.generative.propagation.criticalIterations.map(
                       (item) => (
                         <div key={item.distance} className="critical-item">
-                          <span className="critical-distance">d={item.distance}</span>
+                          <span className="critical-distance">
+                            {item.distance === 1 ? 'Core Fans' : item.distance === 5 ? 'Casual Listeners' : 'New Audiences'}
+                          </span>
                           <span className="critical-n">
-                            n={item.criticalN === Infinity ? 'Never' : item.criticalN}
+                            {item.criticalN === Infinity ? "Won't reach" : `${item.criticalN} plays`}
                           </span>
                         </div>
                       )
@@ -488,13 +514,17 @@ function GenerativeAnalyzer() {
                 </div>
 
                 <p className="propagation-verdict">
-                  {analysis.generative.propagation.verdict}
+                  {analysis.generative.propagation.maxSustainableDistance >= 10
+                    ? "This song can cross cultural boundaries and find fans everywhere!"
+                    : analysis.generative.propagation.maxSustainableDistance >= 5
+                    ? "This song can grow beyond its core audience with promotion."
+                    : "This song works best for a specific, dedicated audience."}
                 </p>
               </div>
 
               {/* LJPW Radar */}
               <div className="result-card radar-card">
-                <h3>LJPW Profile</h3>
+                <h3>Musical DNA</h3>
                 <div className="chart-container">
                   <RadarChart
                     L={analysis.song.L}
@@ -505,28 +535,28 @@ function GenerativeAnalyzer() {
                   />
                 </div>
                 <div className="ljpw-values">
-                  <span style={{ color: '#ff6b6b' }}>L: {analysis.song.L}</span>
-                  <span style={{ color: '#4ecdc4' }}>J: {analysis.song.J}</span>
-                  <span style={{ color: '#ffd93d' }}>P: {analysis.song.P}</span>
-                  <span style={{ color: '#6c5ce7' }}>W: {analysis.song.W}</span>
+                  <span style={{ color: '#ff6b6b' }}>Love: {analysis.song.L}</span>
+                  <span style={{ color: '#4ecdc4' }}>Structure: {analysis.song.J}</span>
+                  <span style={{ color: '#ffd93d' }}>Energy: {analysis.song.P}</span>
+                  <span style={{ color: '#6c5ce7' }}>Depth: {analysis.song.W}</span>
                 </div>
               </div>
             </div>
           ) : (
             <div className="placeholder-card">
-              <div className="placeholder-icon">M = B x L^n x phi^(-d)</div>
+              <div className="placeholder-icon">How Sticky Is Your Song?</div>
               <p>
-                Configure song parameters and generative settings, then click
-                "Analyze" to explore meaning propagation
+                Configure your song and listener settings, then click
+                "Analyze" to see how memorable it will be
               </p>
               <div className="placeholder-tips">
-                <h4>Quick Start Tips:</h4>
+                <h4>Tips for Memorable Songs:</h4>
                 <ul>
-                  <li>C# Major (Love Key) maximizes the Love coefficient</li>
-                  <li>Gospel genre has the highest Love value (0.98)</li>
-                  <li>76 BPM is phi-aligned (phi x 47)</li>
-                  <li>Higher iterations (n) increase growth exponentially</li>
-                  <li>Higher distance (d) increases decay via phi^d</li>
+                  <li>C# Major is the most emotionally resonant key</li>
+                  <li>Gospel has the strongest emotional connection</li>
+                  <li>76 BPM hits a natural sweet spot</li>
+                  <li>More listens = more chances to hook listeners</li>
+                  <li>Songs with high emotion can cross cultural barriers</li>
                 </ul>
               </div>
             </div>
