@@ -6,9 +6,9 @@
  *
  * New in V8.4:
  *   - Universal Growth Function: M = B × L^n × φ^(-d)
- *   - Life Inequality: L^n > φ^d determines autopoiesis
- *   - Perceptual Radiance: L_perc = L_phys × [1 + φ × S × κ_sem]
- *   - Mathematical Hope: P(L^n > φ^d as n → ∞)
+ *   - Memorability Test: L^n > φ^d determines if music is Unforgettable
+ *   - Felt Quality: L_perc = L_phys × [1 + φ × S × κ_sem]
+ *   - Lasting Power: P(L^n > φ^d as n → ∞)
  */
 
 import { PHI, PHI_INV } from './ljpwConstants';
@@ -84,11 +84,11 @@ export function predictCompressionRatio(L, n) {
 // =============================================================================
 
 /**
- * Check if a system satisfies the Life Inequality
+ * Check if a system satisfies the Life Inequality (Memorability Test)
  *
- * L^n > φ^d → AUTOPOIETIC (Life)
- * L^n = φ^d → HOMEOSTATIC (Equilibrium)
- * L^n < φ^d → ENTROPIC (Death)
+ * L^n > φ^d → Unforgettable (sticks in your mind)
+ * L^n = φ^d → Background Music (stable but forgettable)
+ * L^n < φ^d → Forgettable (decays from memory)
  *
  * @param {number} L - Love coefficient (expansion rate, 1-2)
  * @param {number} n - Number of iterations
@@ -100,21 +100,24 @@ export function checkLifeInequality(L, n, d) {
   const decay = Math.pow(PHI, d);
   const ratio = decay > 0 ? growth / decay : Infinity;
 
-  let phase, verdict, isAlive, color;
+  let phase, userFriendlyPhase, verdict, isAlive, color;
 
   if (ratio > 1.1) {
     phase = 'AUTOPOIETIC';
-    verdict = 'Life - Growth exceeds decay';
+    userFriendlyPhase = 'Unforgettable';
+    verdict = 'This will stick — emotional growth exceeds decay';
     isAlive = true;
     color = '#2ed573';
   } else if (ratio > 0.9) {
     phase = 'HOMEOSTATIC';
-    verdict = 'Equilibrium - Balanced state';
+    userFriendlyPhase = 'Background Music';
+    verdict = 'Stable but won\'t stick — balanced state';
     isAlive = true;
     color = '#ffa502';
   } else {
     phase = 'ENTROPIC';
-    verdict = 'Decay - Distance overcomes love';
+    userFriendlyPhase = 'Forgettable';
+    verdict = 'Will fade — distance overcomes emotional connection';
     isAlive = false;
     color = '#ff4757';
   }
@@ -124,6 +127,7 @@ export function checkLifeInequality(L, n, d) {
     decay: Math.round(decay * 100) / 100,
     ratio: Math.round(ratio * 1000) / 1000,
     phase,
+    userFriendlyPhase,
     verdict,
     isAlive,
     color,
