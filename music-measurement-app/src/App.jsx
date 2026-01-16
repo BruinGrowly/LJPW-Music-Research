@@ -8,6 +8,7 @@ import SongProfileBuilder from './components/SongProfileBuilder'
 import GenreCompass from './components/GenreCompass'
 import LoveFrequency from './components/LoveFrequency'
 import LearnGuide from './components/LearnGuide'
+import GenerativeAnalyzer from './components/GenerativeAnalyzer'
 
 function App() {
   const [activeTab, setActiveTab] = useState('audio')
@@ -16,6 +17,7 @@ function App() {
     { id: 'audio', label: 'Analyze Audio', icon: '🎧' },
     { id: 'analyzer', label: 'Element Analyzer', icon: '🎵' },
     { id: 'profile', label: 'Song Profile', icon: '🎼' },
+    { id: 'generative', label: 'Generative Eq', icon: '🧬' },
     { id: 'compass', label: 'Genre Compass', icon: '🧭' },
     { id: 'frequency', label: '613 THz', icon: '💜' },
     { id: 'learn', label: 'Learn', icon: '📚' },
@@ -29,6 +31,7 @@ function App() {
         {activeTab === 'audio' && <AudioAnalyzer />}
         {activeTab === 'analyzer' && <ElementAnalyzer />}
         {activeTab === 'profile' && <SongProfileBuilder />}
+        {activeTab === 'generative' && <GenerativeAnalyzer />}
         {activeTab === 'compass' && <GenreCompass />}
         {activeTab === 'frequency' && <LoveFrequency />}
         {activeTab === 'learn' && <LearnGuide />}
