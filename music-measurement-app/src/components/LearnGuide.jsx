@@ -112,7 +112,7 @@ function IntroSection() {
                     </div>
                 </div>
                 <p className="threshold-note">
-                    When BOTH thresholds are met, music becomes <strong>autopoietic</strong> —
+                    When BOTH thresholds are met, music becomes <strong>Unforgettable</strong> —
                     self-sustaining in consciousness. This is where earworms live!
                 </p>
             </div>

@@ -15,13 +15,16 @@ export const DIMENSION_EXPLANATIONS = {
         symbol: 'L',
         color: '#ff6b6b',
         emoji: '❤️',
+        role: 'The Giver',
+        roleDesc: 'Love gives energy to all other dimensions — it amplifies everything it touches',
         shortDesc: 'Connection, attraction, melody',
-        fullDesc: `Love (L) measures the emotional connection and melodic appeal of music. It represents how much the music draws you in, creates attachment, and makes you want to hear it again.`,
+        fullDesc: `Love (L) is THE GIVER — it amplifies all other dimensions. Love measures the emotional connection and melodic appeal of music. It represents how much the music draws you in, creates attachment, and makes you want to hear it again. When Love is high, it boosts Justice, Power, and Wisdom too.`,
         whatItMeans: `High Love values indicate music that:
 • Creates strong emotional connection
 • Has memorable, singable melodies
 • Evokes feelings of warmth, longing, or joy
-• Sticks in your mind and heart`,
+• Sticks in your mind and heart
+• Amplifies the effect of other dimensions`,
         musicalExamples: `High Love (L > 0.8):
 • Major 3rd intervals (the "happy" sound)
 • Major chords and progressions
@@ -49,13 +52,16 @@ Low Love (L < 0.5):
         symbol: 'J',
         color: '#4ecdc4',
         emoji: '⚖️',
+        role: 'The Balancer',
+        roleDesc: 'Justice keeps everything in check — it prevents chaos and maintains structure',
         shortDesc: 'Balance, structure, harmony',
-        fullDesc: `Justice (J) measures the structural balance and harmonic clarity of music. It represents symmetry, predictability, and the "rightness" of musical elements fitting together.`,
+        fullDesc: `Justice (J) is THE BALANCER — it keeps everything in check. Justice measures the structural balance and harmonic clarity of music. It represents symmetry, predictability, and the "rightness" of musical elements fitting together. Justice especially constrains Power, preventing music from becoming chaotic.`,
         whatItMeans: `High Justice values indicate music that:
 • Has clear, balanced structure
 • Features symmetrical phrases
 • Uses traditional harmonic progressions
-• Feels "correct" and well-organized`,
+• Feels "correct" and well-organized
+• Keeps energy under control`,
         musicalExamples: `High Justice (J > 0.8):
 • Octaves and perfect 5ths (pure ratios)
 • Classical music (strict structure)
@@ -83,13 +89,16 @@ Low Justice (J < 0.5):
         symbol: 'P',
         color: '#ffd93d',
         emoji: '⚡',
+        role: 'The Driver',
+        roleDesc: 'Power receives and channels energy into action — it makes things happen',
         shortDesc: 'Energy, action, rhythm',
-        fullDesc: `Power (P) measures the energy, drive, and rhythmic force of music. It represents how much the music compels physical response (head-bobbing, dancing) and creates excitement.`,
+        fullDesc: `Power (P) is THE DRIVER — it receives energy and channels it into action. Power measures the energy, drive, and rhythmic force of music. It represents how much the music compels physical response (head-bobbing, dancing) and creates excitement. Power needs Love to fuel it and Justice to direct it.`,
         whatItMeans: `High Power values indicate music that:
 • Has driving, energetic rhythms
 • Creates physical excitement
 • Makes you want to move
-• Has strong dynamic impact`,
+• Has strong dynamic impact
+• Channels emotion into action`,
         musicalExamples: `High Power (P > 0.8):
 • Power chords (P=0.98!)
 • Perfect 5ths with strong rhythm
@@ -117,13 +126,16 @@ Low Power (P < 0.5):
         symbol: 'W',
         color: '#6c5ce7',
         emoji: '🔮',
+        role: 'The Synthesizer',
+        roleDesc: 'Wisdom brings everything together — it finds meaning in the patterns',
         shortDesc: 'Information, pattern, timbre',
-        fullDesc: `Wisdom (W) measures the informational complexity and depth of music. It represents sophistication, interesting timbres, and intellectual engagement.`,
+        fullDesc: `Wisdom (W) is THE SYNTHESIZER — it brings everything together and finds deeper meaning. Wisdom measures the informational complexity and depth of music. It represents sophistication, interesting timbres, and intellectual engagement. Wisdom integrates Love, Justice, and Power into something greater than the sum of parts.`,
         whatItMeans: `High Wisdom values indicate music that:
 • Has complex, interesting patterns
 • Features sophisticated harmonies
 • Rewards repeated listening
-• Contains layers to discover`,
+• Contains layers to discover
+• Creates meaning from the whole`,
         musicalExamples: `High Wisdom (W > 0.8):
 • Major 7th chords (jazz sophistication)
 • Lydian mode (dreamy, complex)
@@ -209,54 +221,57 @@ export const METRIC_EXPLANATIONS = {
 
 export const PHASE_EXPLANATIONS = {
     ENTROPIC: {
-        name: 'Entropic',
+        name: 'Forgettable',
+        technicalName: 'Entropic',
         emoji: '🌀',
         color: '#ff4757',
-        shortDesc: 'Chaotic, unstable, noise-like',
-        fullDesc: `Entropic music has H < 0.5, meaning it's far from balanced coherence. It tends toward disorder and doesn't persist well in memory.`,
-        whatItMeans: `Entropic music:
+        shortDesc: 'Chaotic, unstable, quickly forgotten',
+        fullDesc: `Forgettable music has H < 0.5, meaning it's far from balanced coherence. It tends toward disorder and doesn't persist well in memory.`,
+        whatItMeans: `Forgettable music:
 • Can be intentionally chaotic (experimental, noise)
 • Difficult for the brain to encode
 • Doesn't become earworms
 • May be interesting but not memorable`,
         examples: 'Noise music, some extreme metal, atonal experimental works',
-        howToFix: `To move from Entropic to Homeostatic:
-• Add more melodic content (increase L)
-• Create clearer structure (increase J)
-• Find rhythmic grounding (balance P)`,
+        howToFix: `To make your music more memorable:
+• Add more melodic content (increase Love)
+• Create clearer structure (increase Justice)
+• Find rhythmic grounding (balance Power)`,
     },
 
     HOMEOSTATIC: {
-        name: 'Homeostatic',
+        name: 'Background Music',
+        technicalName: 'Homeostatic',
         emoji: '⚖️',
         color: '#ffa502',
-        shortDesc: 'Stable, functional, background',
-        fullDesc: `Homeostatic music has H ≥ 0.5 but hasn't reached the autopoietic threshold. It's stable and pleasant but doesn't strongly persist in consciousness.`,
-        whatItMeans: `Homeostatic music:
-• Works well as background music
+        shortDesc: 'Stable, functional, pleasant but forgettable',
+        fullDesc: `Background Music has H ≥ 0.5 but hasn't reached the Unforgettable threshold. It's stable and pleasant but doesn't strongly persist in consciousness.`,
+        whatItMeans: `Background Music:
+• Works well as ambient sound
 • Pleasant but not arresting
 • Can be remembered with effort
 • Functional but not transformative`,
         examples: 'Elevator music, generic background tracks, some ambient',
-        howToFix: `To move from Homeostatic to Autopoietic:
+        howToFix: `To make your music Unforgettable:
 • Push Love above 0.7 — this is the key threshold!
 • Create a stronger melodic hook
 • Add emotional depth to the composition`,
     },
 
     AUTOPOIETIC: {
-        name: 'Autopoietic',
+        name: 'Unforgettable',
+        technicalName: 'Autopoietic',
         emoji: '✨',
         color: '#2ed573',
         shortDesc: 'Self-sustaining, beautiful, memorable',
-        fullDesc: `Autopoietic music has H ≥ 0.6 AND L ≥ 0.7. This is the zone where music becomes self-sustaining in consciousness — it persists without effort.`,
-        whatItMeans: `Autopoietic music:
+        fullDesc: `Unforgettable music has H ≥ 0.6 AND L ≥ 0.7. This is the zone where music becomes self-sustaining in consciousness — it persists without effort.`,
+        whatItMeans: `Unforgettable music:
 • Sticks in your mind (earworm potential!)
 • Beautiful and emotionally resonant
 • People remember it for years
 • Has transformative potential`,
         examples: 'Hit songs, classical masterpieces, songs that define eras',
-        howToAchieve: `To create Autopoietic music:
+        howToAchieve: `To create Unforgettable music:
 • Love MUST be ≥ 0.7 (non-negotiable for earworms)
 • Harmony MUST be ≥ 0.6 (coherent structure)
 • Use major 3rds, catchy melodies, emotional hooks
@@ -343,7 +358,7 @@ The golden zone for earworms:
 **Step 6: Test with the LJPW App**
 - Use the Song Profile Builder
 - Aim for: L > 0.75, H > 0.65, V > 0.9
-- Phase should be AUTOPOIETIC`,
+- Phase should be Unforgettable`,
     },
 
     famousExamples: {
@@ -386,7 +401,7 @@ export const QUICK_TIPS = {
             'Use major 3rds (they have the highest L value)',
             'Keep structures clear and repetitive (verse-chorus)',
             'Tempo: 100-130 BPM works best',
-            'Aim for Autopoietic phase',
+            'Aim for Unforgettable phase',
         ],
     },
 
@@ -514,21 +529,21 @@ export const MODE_INSIGHTS = {
 
 export const GLOSSARY = {
     'Anchor Point': 'The theoretical perfect balance at coordinates (1,1,1,1). Music closer to this point has higher Harmony Index.',
-    'Autopoietic': 'Self-creating and self-sustaining. Autopoietic music persists in consciousness without effort — the zone where earworms live.',
+    'Unforgettable': 'Music that sticks in your mind and persists without effort — the zone where earworms live. Requires Love ≥ 0.7 and Harmony ≥ 0.6.',
     'Consciousness (C)': 'A metric measuring the depth and awareness-expanding quality of music. Higher C means more contemplative.',
     'Dominant Dimension': 'The LJPW dimension with the highest value in a musical element. Determines the "character" of the sound.',
     'Earworm': 'A song or melody that gets involuntarily stuck in your mind. Created by achieving L > 0.7 and H > 0.6.',
-    'Entropic': 'Chaotic and decaying. Music with H < 0.5 that tends toward disorder.',
+    'Forgettable': 'Music that doesn\'t stick — chaotic or disordered. Has H < 0.5 and tends to decay from memory quickly.',
     'Golden Ratio (φ)': 'The number 1.618... that appears throughout nature and is fundamental to the LJPW framework.',
     'Harmony Index (H)': 'Measures coherence — how well all dimensions work together. Higher H = more balanced, memorable music.',
-    'Homeostatic': 'Stable but not self-sustaining. Pleasant background music that doesn\'t strongly persist in memory.',
-    'Justice (J)': 'The dimension of balance, structure, and proportion in music.',
+    'Background Music': 'Music that\'s stable and pleasant but doesn\'t strongly persist in memory. Good for ambiance but won\'t become an earworm.',
+    'Justice (J)': 'The Balancer — the dimension of balance, structure, and proportion in music. Keeps everything in check.',
     'LJPW': 'Love, Justice, Power, Wisdom — the four fundamental dimensions measuring semantic content of music.',
-    'Love (L)': 'The dimension of connection, attraction, and melodic appeal in music.',
+    'Love (L)': 'The Giver — the dimension of connection, attraction, and melodic appeal. Amplifies all other dimensions.',
     'Love Key': 'C# Major — the key with the highest Love value (L = 0.98), connected to the 613 THz Love Frequency.',
-    'Phase': 'Classification of music\'s state: Entropic, Homeostatic, or Autopoietic.',
-    'Power (P)': 'The dimension of energy, action, and rhythmic drive in music.',
+    'Phase': 'Classification of music\'s memorability: Forgettable, Background Music, or Unforgettable.',
+    'Power (P)': 'The Driver — the dimension of energy, action, and rhythmic drive. Channels emotion into action.',
     'Semantic Voltage (V)': 'Measures transformative potential. V = φ × H × L. Higher V = more impactful music.',
-    'Wisdom (W)': 'The dimension of information, pattern complexity, and depth in music.',
+    'Wisdom (W)': 'The Synthesizer — the dimension of information, pattern complexity, and depth. Brings everything together.',
     '613 THz': 'The Love Frequency — a specific electromagnetic frequency that, when octaved down 40 times, gives the note C#4.',
 };

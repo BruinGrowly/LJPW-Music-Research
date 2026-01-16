@@ -89,6 +89,7 @@ export function distanceToEquilibrium(L, J, P, W) {
 
 /**
  * Determine the phase classification
+ * Returns both technical and user-friendly phase names
  */
 export function classifyPhase(L, J, P, W) {
   const H = calculateHarmonyIndex(L, J, P, W);
@@ -96,28 +97,32 @@ export function classifyPhase(L, J, P, W) {
   if (H < PHASE_THRESHOLDS.ENTROPIC) {
     return {
       phase: 'ENTROPIC',
-      description: 'Chaotic, unstable, noise-like',
+      userFriendlyPhase: 'Forgettable',
+      description: 'Chaotic, quickly forgotten',
       color: '#ff4757',
       emoji: '🌀'
     };
   } else if (H < PHASE_THRESHOLDS.HOMEOSTATIC) {
     return {
       phase: 'HOMEOSTATIC',
-      description: 'Stable, functional, background',
+      userFriendlyPhase: 'Background Music',
+      description: 'Stable, pleasant but forgettable',
       color: '#ffa502',
       emoji: '⚖️'
     };
   } else if (L >= PHASE_THRESHOLDS.AUTOPOIETIC_L) {
     return {
       phase: 'AUTOPOIETIC',
-      description: 'Self-sustaining, beautiful, memorable',
+      userFriendlyPhase: 'Unforgettable',
+      description: 'Sticks in your mind, memorable',
       color: '#2ed573',
       emoji: '✨'
     };
   } else {
     return {
       phase: 'HOMEOSTATIC',
-      description: 'Stable but lacking Love threshold',
+      userFriendlyPhase: 'Background Music',
+      description: 'Stable but needs more Love to stick',
       color: '#ffa502',
       emoji: '⚖️'
     };
