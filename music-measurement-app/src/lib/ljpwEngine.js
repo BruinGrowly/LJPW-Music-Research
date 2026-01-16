@@ -4,6 +4,13 @@
  * This module provides all calculation functions for measuring music
  * using the LJPW framework. The constants are hidden from the user;
  * only the results are displayed.
+ *
+ * V8.4 Additions:
+ *   - Universal Growth Function: M = B × L^n × φ^(-d)
+ *   - Life Inequality analysis
+ *   - Mathematical Hope calculation
+ *   - Earworm prediction
+ *   - Propagation analysis
  */
 
 import {
@@ -20,6 +27,23 @@ import {
   TEMPO_RANGES,
   PHI_TEMPO,
 } from './ljpwConstants';
+
+// Re-export V8.4 Generative Equation functions
+export {
+  calculateMeaning,
+  calculateMusicMeaning,
+  checkLifeInequality,
+  checkSongLifeInequality,
+  findCriticalIterations,
+  findMaxPropagationDistance,
+  calculatePerceptualRadiance,
+  analyzeAudioPerception,
+  calculateHope,
+  calculateSongHope,
+  predictEarworm,
+  analyzePropagation,
+  performGenerativeAnalysis
+} from './generativeEquation';
 
 // =============================================================================
 // CORE CALCULATIONS
