@@ -17,6 +17,82 @@
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+
+  /* ===========================================
+     LJPW Design System - CSS Custom Properties
+     =========================================== */
+
+  /* LJPW Dimension Colors */
+  --color-love: #ff6b6b;
+  --color-love-light: #ff8a8a;
+  --color-justice: #4ecdc4;
+  --color-justice-light: #7ee3dc;
+  --color-power: #ffd93d;
+  --color-power-light: #ffe066;
+  --color-wisdom: #6c5ce7;
+  --color-wisdom-light: #a29bfe;
+
+  /* Phase Colors */
+  --color-autopoietic: #2ed573;
+  --color-homeostatic: #ffa502;
+  --color-entropic: #ff4757;
+
+  /* UI Colors */
+  --color-bg-primary: #0a0a0f;
+  --color-bg-secondary: #0f0f1a;
+  --color-bg-card: rgba(255, 255, 255, 0.03);
+  --color-bg-card-hover: rgba(255, 255, 255, 0.05);
+  --color-border: rgba(255, 255, 255, 0.05);
+  --color-border-light: rgba(255, 255, 255, 0.1);
+  --color-text-primary: rgba(255, 255, 255, 0.87);
+  --color-text-secondary: #a0a0a0;
+  --color-text-muted: #666;
+  --color-accent: #6c5ce7;
+  --color-accent-light: #a29bfe;
+
+  /* Spacing Scale */
+  --spacing-xs: 0.25rem;
+  --spacing-sm: 0.5rem;
+  --spacing-md: 1rem;
+  --spacing-lg: 1.5rem;
+  --spacing-xl: 2rem;
+  --spacing-2xl: 3rem;
+  --spacing-3xl: 4rem;
+
+  /* Typography Scale */
+  --text-xs: 0.7rem;
+  --text-sm: 0.85rem;
+  --text-base: 1rem;
+  --text-lg: 1.1rem;
+  --text-xl: 1.25rem;
+  --text-2xl: 1.5rem;
+  --text-3xl: 2rem;
+
+  /* Border Radius */
+  --radius-sm: 4px;
+  --radius-md: 8px;
+  --radius-lg: 12px;
+  --radius-xl: 16px;
+  --radius-full: 9999px;
+
+  /* Breakpoints (for reference in JS - CSS can't use these directly) */
+  --bp-mobile: 480px;
+  --bp-tablet: 768px;
+  --bp-desktop: 1024px;
+  --bp-wide: 1280px;
+
+  /* Transitions */
+  --transition-fast: 0.15s ease;
+  --transition-normal: 0.2s ease;
+  --transition-slow: 0.3s ease;
+
+  /* Shadows */
+  --shadow-sm: 0 2px 4px rgba(0, 0, 0, 0.2);
+  --shadow-md: 0 4px 12px rgba(0, 0, 0, 0.3);
+  --shadow-lg: 0 8px 24px rgba(0, 0, 0, 0.4);
+  --shadow-glow-love: 0 4px 15px rgba(255, 107, 107, 0.3);
+  --shadow-glow-wisdom: 0 4px 15px rgba(108, 92, 231, 0.3);
+  --shadow-glow-autopoietic: 0 4px 15px rgba(46, 213, 115, 0.3);
 }
 
 body {
@@ -95,4 +171,120 @@ select option {
 
 ::-webkit-scrollbar-thumb:hover {
   background: rgba(255, 255, 255, 0.2);
+}
+
+/* ===========================================
+   Global Utility Classes
+   =========================================== */
+
+/* Screen reader only - visually hidden but accessible */
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+/* Focus visible for keyboard navigation */
+.focus-visible:focus {
+  outline: 2px solid var(--color-accent);
+  outline-offset: 2px;
+}
+
+/* Skip link for accessibility */
+.skip-link {
+  position: absolute;
+  top: -40px;
+  left: 0;
+  background: var(--color-accent);
+  color: white;
+  padding: var(--spacing-sm) var(--spacing-md);
+  z-index: 100;
+  transition: top var(--transition-fast);
+}
+
+.skip-link:focus {
+  top: 0;
+}
+
+/* Error fallback styling */
+.error-fallback {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 300px;
+  padding: var(--spacing-2xl);
+  text-align: center;
+  background: var(--color-bg-card);
+  border-radius: var(--radius-xl);
+  border: 1px solid var(--color-entropic);
+}
+
+.error-fallback h2 {
+  color: var(--color-entropic);
+  margin-bottom: var(--spacing-md);
+}
+
+.error-fallback p {
+  color: var(--color-text-secondary);
+  margin-bottom: var(--spacing-lg);
+}
+
+.error-fallback button {
+  background: var(--color-entropic);
+  color: white;
+  padding: var(--spacing-sm) var(--spacing-lg);
+}
+
+/* ===========================================
+   Responsive Utilities
+   =========================================== */
+
+/* Mobile first breakpoints */
+@media (max-width: 480px) {
+  :root {
+    --text-2xl: 1.25rem;
+    --text-3xl: 1.5rem;
+    --spacing-xl: 1.5rem;
+    --spacing-2xl: 2rem;
+  }
+
+  .hide-mobile {
+    display: none !important;
+  }
+}
+
+@media (min-width: 481px) and (max-width: 768px) {
+  .hide-tablet {
+    display: none !important;
+  }
+}
+
+@media (min-width: 769px) {
+  .hide-desktop {
+    display: none !important;
+  }
+}
+
+/* Responsive grid helpers */
+@media (max-width: 768px) {
+  .grid-responsive {
+    grid-template-columns: 1fr !important;
+  }
+
+  .grid-2-mobile {
+    grid-template-columns: repeat(2, 1fr) !important;
+  }
+}
+
+@media (max-width: 480px) {
+  .grid-1-mobile {
+    grid-template-columns: 1fr !important;
+  }
 }

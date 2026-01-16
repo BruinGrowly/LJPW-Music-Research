@@ -166,18 +166,86 @@
 /* Error Message */
 .error-message {
   display: flex;
-  align-items: center;
+  align-items: flex-start;
   gap: 0.75rem;
   padding: 1rem 1.5rem;
-  background: rgba(255, 107, 107, 0.1);
-  border: 1px solid rgba(255, 107, 107, 0.3);
-  border-radius: 10px;
-  color: #ff6b6b;
+  background: rgba(255, 71, 87, 0.1);
+  border: 1px solid rgba(255, 71, 87, 0.3);
+  border-radius: var(--radius-lg);
+  color: var(--color-entropic);
   margin-bottom: 2rem;
 }
 
 .error-icon {
   font-size: 1.2rem;
+  flex-shrink: 0;
+  margin-top: 0.1rem;
+}
+
+.error-content {
+  flex: 1;
+}
+
+.error-content strong {
+  display: block;
+  margin-bottom: 0.25rem;
+  color: var(--color-entropic);
+}
+
+.error-content p {
+  margin: 0;
+  font-size: var(--text-sm);
+  color: rgba(255, 255, 255, 0.7);
+  line-height: 1.5;
+}
+
+.error-dismiss {
+  background: none;
+  border: none;
+  color: var(--color-entropic);
+  font-size: 1.5rem;
+  cursor: pointer;
+  padding: 0;
+  line-height: 1;
+  opacity: 0.7;
+  transition: opacity var(--transition-fast);
+}
+
+.error-dismiss:hover {
+  opacity: 1;
+}
+
+/* Export Actions */
+.export-actions {
+  display: flex;
+  gap: var(--spacing-sm);
+  margin-bottom: var(--spacing-lg);
+  flex-wrap: wrap;
+}
+
+.export-btn {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-sm);
+  padding: var(--spacing-sm) var(--spacing-md);
+  background: var(--color-bg-card);
+  border: 1px solid var(--color-border-light);
+  border-radius: var(--radius-md);
+  color: var(--color-text-secondary);
+  font-size: var(--text-sm);
+  cursor: pointer;
+  transition: all var(--transition-normal);
+}
+
+.export-btn:hover {
+  background: var(--color-bg-card-hover);
+  color: var(--color-text-primary);
+  border-color: var(--color-accent);
+}
+
+.export-btn:focus-visible {
+  outline: 2px solid var(--color-accent);
+  outline-offset: 2px;
 }
 
 /* Results */
@@ -416,4 +484,128 @@
 
 .interpretation strong {
   color: #fff;
+}
+
+/* ===========================================
+   Mobile Responsiveness
+   =========================================== */
+
+@media (max-width: 768px) {
+  .audio-analyzer {
+    padding: var(--spacing-lg);
+  }
+
+  .upload-area {
+    padding: var(--spacing-xl) var(--spacing-lg);
+  }
+
+  .upload-icon {
+    font-size: 3rem;
+  }
+
+  .upload-prompt h3 {
+    font-size: 1.1rem;
+  }
+
+  .audio-properties {
+    gap: var(--spacing-lg);
+  }
+
+  .property-value {
+    font-size: 1rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .audio-analyzer {
+    padding: var(--spacing-md);
+  }
+
+  .analyzer-header h2 {
+    font-size: 1.25rem;
+  }
+
+  .upload-area {
+    padding: var(--spacing-lg) var(--spacing-md);
+  }
+
+  .upload-icon {
+    font-size: 2.5rem;
+    margin-bottom: var(--spacing-sm);
+  }
+
+  .upload-prompt h3 {
+    font-size: 1rem;
+  }
+
+  .file-info {
+    flex-direction: column;
+    text-align: center;
+    gap: var(--spacing-sm);
+  }
+
+  .file-details {
+    width: 100%;
+  }
+
+  .change-file-btn {
+    width: 100%;
+  }
+
+  .audio-properties {
+    flex-direction: column;
+    gap: var(--spacing-md);
+  }
+
+  .result-section {
+    padding: var(--spacing-md);
+  }
+
+  .ljpw-header {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .chart-container {
+    padding: var(--spacing-sm);
+  }
+
+  .key-metrics {
+    grid-template-columns: 1fr;
+    gap: var(--spacing-sm);
+  }
+
+  .metric-card {
+    padding: var(--spacing-sm);
+  }
+
+  .metric-value {
+    font-size: 1.25rem;
+  }
+
+  .export-actions {
+    flex-direction: column;
+  }
+
+  .export-btn {
+    width: 100%;
+    justify-content: center;
+  }
+
+  .error-message {
+    flex-direction: column;
+    text-align: center;
+  }
+
+  .error-dismiss {
+    align-self: flex-end;
+    position: absolute;
+    top: var(--spacing-sm);
+    right: var(--spacing-sm);
+  }
+
+  .error-message {
+    position: relative;
+    padding-top: var(--spacing-lg);
+  }
 }
