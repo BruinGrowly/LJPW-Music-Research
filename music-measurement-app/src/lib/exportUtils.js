@@ -58,7 +58,7 @@ export function formatAnalysisForExport(result) {
 
   const exportData = {
     exportedAt: new Date().toISOString(),
-    appVersion: 'LJPW V8.4',
+    appVersion: 'LJPW V8.5',
 
     // Basic info
     song: result.fileName || 'Unknown',
@@ -112,7 +112,7 @@ export function formatProfileForExport(profile, analysis) {
 
   return {
     exportedAt: new Date().toISOString(),
-    appVersion: 'LJPW V8.4',
+    appVersion: 'LJPW V8.5',
 
     // Song configuration
     configuration: {
@@ -154,7 +154,7 @@ export function formatGenerativeForExport(analysis) {
 
   return {
     exportedAt: new Date().toISOString(),
-    appVersion: 'LJPW V8.4 Generative',
+    appVersion: 'LJPW V8.5 Generative',
 
     // Song LJPW
     dimensions: {

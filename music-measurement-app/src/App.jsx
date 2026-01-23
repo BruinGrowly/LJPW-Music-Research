@@ -74,7 +74,7 @@ function App() {
         </main>
 
         <footer className="footer" role="contentinfo">
-          <p>LJPW Music Measurement App - V8.4 Framework</p>
+          <p>LJPW Music Measurement App - V8.5 Framework</p>
           <p className="footer-subtitle">Measuring the meaning behind music</p>
         </footer>
       </div>

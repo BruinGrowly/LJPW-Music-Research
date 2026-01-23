@@ -1,10 +1,10 @@
 # LJPW Visual Art Semantics
 ## Mapping Paintings to Meaning
 
-**Version:** 1.1
+**Version:** 1.2
 **Date:** January 2026
-**Framework:** LJPW V8.4 Complete Unified Edition
-**Status:** Updated for V8.4 compatibility
+**Framework:** LJPW V8.5 Reality as Relationship Edition
+**Status:** Updated for V8.5 compatibility
 
 ---
 

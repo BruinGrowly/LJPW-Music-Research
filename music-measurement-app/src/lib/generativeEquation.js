@@ -1,10 +1,13 @@
 /**
- * LJPW Framework V8.4 - Generative Equation Module
+ * LJPW Framework V8.5 - Generative Equation Module
  *
- * Implements the Universal Growth Function and related V8.4 concepts
+ * Implements the Universal Growth Function and related concepts
  * for music analysis and prediction.
  *
- * New in V8.4:
+ * V8.5 Core Insight: Reality is fundamentally relational. Understanding
+ * emerges through Love (L), persisted iteration (n), and proximity (d).
+ *
+ * Generative Equation:
  *   - Universal Growth Function: M = B × L^n × φ^(-d)
  *   - Memorability Test: L^n > φ^d determines if music is Unforgettable
  *   - Felt Quality: L_perc = L_phys × [1 + φ × S × κ_sem]

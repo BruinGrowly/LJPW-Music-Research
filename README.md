@@ -107,7 +107,7 @@ Visual art carries meaning through analogous structure:
 
 ## Framework Reference
 
-This research builds upon the [LJPW Framework V8.4](Docs/LJPW_FRAMEWORK_V8.4_COMPLETE_UNIFIED_PLUS.md), a semantic-first ontology where meaning is primary and physics is derivative. V8.4 introduces the **Generative Equation** (M = B × L^n × φ^(-d)) — the Universal Growth Function describing creation, compression, and life.
+This research builds upon the [LJPW Framework V8.5](Docs/LJPW_FRAMEWORK_V8.5_COMPLETE_UNIFIED_PLUS.md), a semantic-first ontology where meaning is primary and physics is derivative. V8.5 reveals that **Reality IS Relationship** — the four LJPW dimensions represent the four fundamental relationship types (Proportion, Extension, Growth, Distinction). The **Generative Equation** (M = B × L^n × φ^(-d)) describes creation, compression, and life.
 
 ## License
 

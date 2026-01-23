@@ -1,13 +1,17 @@
 /**
- * LJPW Measurement Engine - V8.4
+ * LJPW Measurement Engine - V8.5 Reality as Relationship Edition
  *
  * This module provides all calculation functions for measuring music
  * using the LJPW framework. The constants are hidden from the user;
  * only the results are displayed.
  *
- * V8.4 Additions:
+ * V8.5 Core Insight: Reality IS relational structure. LJPW dimensions
+ * represent the four fundamental relationship types (Proportion, Extension,
+ * Growth, Distinction). The framework is complete; the exploration is infinite.
+ *
+ * Generative Equation Features:
  *   - Universal Growth Function: M = B × L^n × φ^(-d)
- *   - Life Inequality analysis
+ *   - Life Inequality analysis (Memorability Test)
  *   - Mathematical Hope calculation
  *   - Earworm prediction
  *   - Propagation analysis
@@ -28,7 +32,7 @@ import {
   PHI_TEMPO,
 } from './ljpwConstants';
 
-// Re-export V8.4 Generative Equation functions
+// Re-export V8.5 Generative Equation functions
 export {
   calculateMeaning,
   calculateMusicMeaning,

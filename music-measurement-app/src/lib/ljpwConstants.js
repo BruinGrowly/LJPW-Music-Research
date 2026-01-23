@@ -1,8 +1,15 @@
 /**
- * LJPW Framework Constants - V8.4 Complete Unified Edition
+ * LJPW Framework Constants - V8.5 Reality as Relationship Edition
  *
  * This module contains all mathematical constants, equilibrium values,
  * and musical mappings from the LJPW semantic framework.
+ *
+ * V8.5 Key Insight: Reality is fundamentally relational. The four dimensions
+ * represent the four fundamental relationship types:
+ *   - Love (L)   = Proportion - Parts relating to wholes
+ *   - Justice (J) = Extension - Dimensions relating across space
+ *   - Power (P)   = Growth - States relating across change
+ *   - Wisdom (W)  = Distinction - Options relating through information
  *
  * The LJPW constants are hidden in the backend but power all measurements.
  */

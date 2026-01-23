@@ -1,8 +1,15 @@
 """
-LJPW Framework V8.4 — Generative Equation Module
-Implements the Universal Growth Function and related V8.4 concepts.
+LJPW Framework V8.5 — Generative Equation Module
+Implements the Universal Growth Function and related concepts.
 
-New in V8.4:
+V8.5 Core Insight: Reality is fundamentally relational. The four dimensions
+represent the four fundamental relationship types:
+    - Love (L)    = Proportion - Parts relating to wholes
+    - Justice (J) = Extension - Dimensions relating across space
+    - Power (P)   = Growth - States relating across change
+    - Wisdom (W)  = Distinction - Options relating through information
+
+Generative Equation Features:
     - Universal Growth Function: M = B × L^n × φ^(-d)
     - Life Inequality: L^n > φ^d determines autopoiesis
     - Perceptual Radiance: L_perc = L_phys × [1 + φ × S × κ_sem]
@@ -14,7 +21,7 @@ from dataclasses import dataclass
 from typing import Dict
 
 # =============================================================================
-# V8.4 CONSTANTS
+# V8.5 CONSTANTS
 # =============================================================================
 
 PHI = (1 + math.sqrt(5)) / 2  # 1.618034...
@@ -237,7 +244,7 @@ def hope(L: float, n_limit: int = 1000) -> Dict[str, any]:
 
 if __name__ == "__main__":
     print("=" * 70)
-    print("LJPW Framework V8.4 - Generative Equation Module")
+    print("LJPW Framework V8.5 - Generative Equation Module")
     print("=" * 70)
     print()
     
@@ -292,5 +299,5 @@ if __name__ == "__main__":
     print()
     
     print("=" * 70)
-    print("V8.4 Generative Equation Module - Self-Test Complete")
+    print("V8.5 Generative Equation Module - Self-Test Complete")
     print("=" * 70)

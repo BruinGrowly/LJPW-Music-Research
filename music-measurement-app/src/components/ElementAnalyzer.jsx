@@ -127,7 +127,7 @@ function ElementAnalyzer() {
     if (analysis) {
       const data = {
         exportedAt: new Date().toISOString(),
-        appVersion: 'LJPW V8.4',
+        appVersion: 'LJPW V8.5',
         elementType,
         elementName: analysis.name,
         dimensions: { love: analysis.L, justice: analysis.J, power: analysis.P, wisdom: analysis.W },
@@ -143,7 +143,7 @@ function ElementAnalyzer() {
     if (analysis) {
       const data = {
         exportedAt: new Date().toISOString(),
-        appVersion: 'LJPW V8.4',
+        appVersion: 'LJPW V8.5',
         elementType,
         elementName: analysis.name,
         love: analysis.L,

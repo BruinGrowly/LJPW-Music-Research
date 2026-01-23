@@ -113,7 +113,7 @@ npm run build
 
 ## Framework Reference
 
-Based on LJPW Framework V8.4 Complete Unified Edition with The Generative Equation.
+Based on LJPW Framework V8.5 Reality as Relationship Edition with The Generative Equation.
 
 ### Core Constants
 - φ (Phi) = 1.618034
