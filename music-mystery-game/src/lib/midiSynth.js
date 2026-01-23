@@ -222,6 +222,46 @@ export function playChord(noteNames, duration = 1.0, voiceType = 'piano', volume
 }
 
 /**
+ * Build a chord from a root note and chord type
+ * Returns an array of note names
+ */
+export function buildChord(rootNote, chordType = 'major') {
+  const rootFreq = NOTE_FREQUENCIES[rootNote]
+  if (!rootFreq) return null
+
+  // Get the base note name and octave
+  const noteName = rootNote.replace(/[0-9]/g, '')
+  const octave = parseInt(rootNote.match(/[0-9]/)?.[0] || '4')
+
+  const noteIndex = NOTE_NAMES.indexOf(noteName)
+  if (noteIndex === -1) return null
+
+  // Chord intervals in semitones
+  const chordIntervals = {
+    'major': [0, 4, 7],
+    'minor': [0, 3, 7],
+    'diminished': [0, 3, 6],
+    'augmented': [0, 4, 8],
+    'major7': [0, 4, 7, 11],
+    'minor7': [0, 3, 7, 10],
+    'dominant7': [0, 4, 7, 10],
+    'sus2': [0, 2, 7],
+    'sus4': [0, 5, 7],
+  }
+
+  const intervals = chordIntervals[chordType] || chordIntervals['major']
+
+  // Build the chord notes
+  const chordNotes = intervals.map(interval => {
+    const newNoteIndex = (noteIndex + interval) % 12
+    const newOctave = octave + Math.floor((noteIndex + interval) / 12)
+    return `${NOTE_NAMES[newNoteIndex]}${newOctave}`
+  })
+
+  return chordNotes
+}
+
+/**
  * Play a melody (sequence of notes)
  */
 export function playMelody(notes, tempo = 120, voiceType = 'piano', volume = 0.4) {
@@ -309,13 +349,27 @@ export function playScale(rootNote, scalePattern, ascending = true) {
   }
 }
 
+// Track the current atmosphere controller
+let atmosphereController = null
+
 /**
  * Play atmospheric background music
+ * Can accept either a mood string or intensity number (0-1) from the Generative Equation
  */
-export function playAtmosphere(mood = 'mysterious') {
+export function playAtmosphere(moodOrIntensity = 'mysterious') {
   if (!initialized) {
     if (!initAudio()) return null
   }
+
+  // Stop any existing atmosphere
+  stopAtmosphere()
+
+  // Determine if we're using intensity (number) or mood (string)
+  const isIntensity = typeof moodOrIntensity === 'number'
+  const intensity = isIntensity ? moodOrIntensity : 0.5
+  const mood = isIntensity
+    ? (intensity > 0.6 ? 'discovery' : intensity > 0.3 ? 'mysterious' : 'tension')
+    : moodOrIntensity
 
   // Return a controller to stop the atmosphere
   let isPlaying = true
@@ -325,38 +379,66 @@ export function playAtmosphere(mood = 'mysterious') {
 
     const time = audioContext.currentTime
 
-    if (mood === 'mysterious') {
+    // Volume scales with intensity from the Generative Equation
+    const baseVolume = isIntensity ? 0.05 + intensity * 0.1 : 0.08
+
+    if (mood === 'mysterious' || intensity <= 0.3) {
       // Eerie, sparse pad sounds
       const notes = ['E3', 'B3', 'D4', 'A3']
       const note = notes[Math.floor(Math.random() * notes.length)]
-      createPadVoice(NOTE_FREQUENCIES[note], time, 4 + Math.random() * 2, 0.08)
+      createPadVoice(NOTE_FREQUENCIES[note], time, 4 + Math.random() * 2, baseVolume)
 
       // Occasional low bass note
       if (Math.random() > 0.7) {
         const bassNotes = ['E2', 'A2', 'D2']
         const bassNote = bassNotes[Math.floor(Math.random() * bassNotes.length)]
-        createBassVoice(NOTE_FREQUENCIES[bassNote], time + 2, 2, 0.1)
+        createBassVoice(NOTE_FREQUENCIES[bassNote], time + 2, 2, baseVolume * 1.2)
       }
-    } else if (mood === 'discovery') {
-      // Lighter, more hopeful
-      const notes = ['C4', 'E4', 'G4', 'A4']
-      const note = notes[Math.floor(Math.random() * notes.length)]
-      createPadVoice(NOTE_FREQUENCIES[note], time, 3, 0.1)
+    } else if (mood === 'discovery' || intensity > 0.6) {
+      // Lighter, more hopeful - scales with intensity
+      const notes = ['C4', 'E4', 'G4', 'A4', 'B4']
+      const numNotes = Math.floor(1 + intensity * 2)
+      for (let i = 0; i < numNotes; i++) {
+        const note = notes[Math.floor(Math.random() * notes.length)]
+        createPadVoice(NOTE_FREQUENCIES[note], time + i * 0.5, 3 - i * 0.3, baseVolume * (1 - i * 0.2))
+      }
+
+      // Add bass for fuller sound at high intensity
+      if (intensity > 0.7 && Math.random() > 0.5) {
+        createBassVoice(NOTE_FREQUENCIES['C3'], time + 1, 2, baseVolume * 0.8)
+      }
     } else if (mood === 'tension') {
       // Dissonant, unsettling
       const notes = ['D#3', 'A3', 'E4', 'Bb3']
       const note = notes[Math.floor(Math.random() * notes.length)]
-      createPadVoice(NOTE_FREQUENCIES[note], time, 5, 0.06)
+      createPadVoice(NOTE_FREQUENCIES[note], time, 5, baseVolume * 0.7)
     }
 
+    // Interval scales inversely with intensity (more intense = more frequent)
+    const interval = isIntensity
+      ? 2000 + (1 - intensity) * 4000 + Math.random() * 2000
+      : 3000 + Math.random() * 4000
+
     // Schedule next iteration
-    setTimeout(playLoop, 3000 + Math.random() * 4000)
+    setTimeout(playLoop, interval)
   }
 
   playLoop()
 
-  return {
+  atmosphereController = {
     stop: () => { isPlaying = false }
+  }
+
+  return atmosphereController
+}
+
+/**
+ * Stop the atmospheric background music
+ */
+export function stopAtmosphere() {
+  if (atmosphereController) {
+    atmosphereController.stop()
+    atmosphereController = null
   }
 }
 
@@ -418,10 +500,12 @@ export default {
   initAudio,
   playNote,
   playChord,
+  buildChord,
   playMelody,
   playInterval,
   playScale,
   playAtmosphere,
+  stopAtmosphere,
   playSilenceBreak,
   getNoteFrequency,
   getNoteNames,

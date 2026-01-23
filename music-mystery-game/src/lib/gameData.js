@@ -679,6 +679,42 @@ export const ROOMS = {
     `,
 
     interactables: {
+      equation_tablet: {
+        name: 'The Golden Tablet',
+        examined: false,
+        description: `
+          Beside the crystal mechanism, a small golden tablet bears an equation:
+
+          M = B × L^n × φ^(-d)
+
+          Below it, Ashworth's notes explain:
+
+          "The Universal Growth Function - the mathematics of memorability.
+
+          M = Meaning (how memorable your melody becomes)
+          B = Brick (the initial impact of your composition)
+          L = Love (the emotional coefficient - how much heart it has)
+          n = Iterations (how many times it's heard)
+          d = Distance (cultural gap between creator and listener)
+          φ = The Golden Ratio (1.618...)
+
+          THE LIFE INEQUALITY: L^n > φ^d
+
+          When Growth (L^n) exceeds Decay (φ^d), the melody becomes
+          AUTOPOIETIC - self-sustaining, unforgettable, eternal.
+
+          When they're equal, the melody is HOMEOSTATIC - stable, pleasant.
+
+          When Decay wins, the melody is ENTROPIC - it fades and is forgotten.
+
+          This is why some melodies stick in your head forever while others
+          vanish the moment they end. It's not magic. It's mathematics.
+
+          Your melody must GROW faster than it FADES."
+        `,
+        teaches: 'generative',
+        unlocks: 'lesson_generative',
+      },
       crystal_mechanism: {
         name: 'The Crystal Mechanism',
         examined: false,
@@ -695,6 +731,7 @@ export const ROOMS = {
           Not just a song. A conversation. With the silence itself.
 
           The mechanism awaits your composition. Your Silence Breaker.
+          The golden tablet nearby will analyze your melody's memorability.
         `,
         interactive: true,
         type: 'song_builder',
@@ -937,6 +974,53 @@ export const LESSONS = {
       It takes the listener somewhere - and brings them safely back.
     `,
     interactive: 'melody_builder',
+  },
+
+  generative: {
+    id: 'generative',
+    title: 'The Mathematics of Memory',
+    room: 'tower',
+    content: `
+      Edmund Ashworth discovered something profound: memorable music follows
+      a mathematical pattern. He called it the GENERATIVE EQUATION:
+
+      M = B × L^n × φ^(-d)
+
+      WHERE:
+      • M = MEANING - How memorable and impactful the melody becomes
+      • B = BRICK - The initial "seed" of impact (your composition's foundation)
+      • L = LOVE - The emotional coefficient (1.0 to 2.0 range)
+      • n = ITERATIONS - How many times it's heard/repeated
+      • φ = PHI - The Golden Ratio (1.618...)
+      • d = DISTANCE - Cultural/contextual gap to overcome
+
+      THE LIFE INEQUALITY: L^n > φ^d
+
+      This is the key to memorability. Your melody GROWS through Love
+      and repetition (L^n), but must overcome natural DECAY (φ^d).
+
+      • UNFORGETTABLE: When growth exceeds decay, the melody persists forever
+      • STABLE: When they're balanced, the melody holds steady
+      • FORGETTABLE: When decay wins, the melody fades into nothing
+
+      HOW TO COMPOSE MEMORABLY:
+
+      HIGH LOVE (L) comes from:
+      • Major 3rds and 6ths (intervals of emotional warmth)
+      • Perfect 5ths and 4ths (stability and consonance)
+      • Resolved tension (movement that feels satisfying)
+
+      LOW LOVE comes from:
+      • Too much dissonance without resolution
+      • Intervals that feel cold or unresolved
+      • Lack of emotional contour
+
+      The silence you've felt in this manor? It represents maximum decay
+      with zero growth. Music - emotional, living music - is the antidote.
+
+      Your melody must GROW FASTER THAN IT FADES.
+    `,
+    interactive: 'equation_visualizer',
   },
 }
 

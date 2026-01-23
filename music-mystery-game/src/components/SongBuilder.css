@@ -293,6 +293,252 @@
   margin-bottom: 0.25rem;
 }
 
+/* =============================================================================
+   EQUATION ANALYSIS SECTION
+   ============================================================================= */
+
+.equation-analysis {
+  background: rgba(0, 0, 0, 0.4);
+  border: 1px solid rgba(107, 91, 149, 0.3);
+  border-radius: 12px;
+  padding: 1.25rem;
+  margin-bottom: 1.5rem;
+}
+
+.equation-analysis h3 {
+  color: var(--accent-gold);
+  font-size: 1rem;
+  margin-bottom: 1rem;
+  text-align: center;
+}
+
+/* Memorability Meter */
+.memorability-meter {
+  margin-bottom: 1rem;
+}
+
+.memorability-meter .meter-label {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 0.5rem;
+}
+
+.memorability-meter .meter-label span {
+  color: var(--text-secondary);
+  font-size: 0.9rem;
+}
+
+.memorability-meter .score {
+  color: var(--text-primary);
+  font-family: var(--font-mono);
+  font-weight: bold;
+}
+
+.memorability-meter .meter-track {
+  height: 12px;
+  background: rgba(0, 0, 0, 0.5);
+  border-radius: 6px;
+  overflow: hidden;
+}
+
+.memorability-meter .meter-fill {
+  height: 100%;
+  border-radius: 6px;
+  transition: width 0.5s ease, background-color 0.5s ease;
+}
+
+/* Life Inequality Result */
+.life-inequality-result {
+  background: rgba(0, 0, 0, 0.3);
+  border: 2px solid;
+  border-radius: 8px;
+  padding: 1rem;
+  margin-bottom: 1rem;
+  text-align: center;
+}
+
+.inequality-header {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  margin-bottom: 0.5rem;
+}
+
+.phase-emoji {
+  font-size: 1.5rem;
+}
+
+.phase-name {
+  font-family: var(--font-display);
+  font-size: 1.25rem;
+  font-weight: bold;
+}
+
+.verdict {
+  color: var(--text-secondary);
+  font-size: 0.9rem;
+  margin-bottom: 0.75rem;
+  line-height: 1.5;
+}
+
+.formula-display {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.75rem;
+  font-family: var(--font-mono);
+  font-size: 0.85rem;
+}
+
+.growth-side {
+  color: var(--accent-hope);
+}
+
+.vs {
+  color: var(--text-muted);
+}
+
+.decay-side {
+  color: var(--accent-mystery);
+}
+
+/* LJPW Values */
+.ljpw-values {
+  display: grid;
+  gap: 0.5rem;
+  margin-bottom: 1rem;
+}
+
+.ljpw-item {
+  display: grid;
+  grid-template-columns: 80px 1fr 45px;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.ljpw-label {
+  color: var(--text-secondary);
+  font-size: 0.85rem;
+}
+
+.ljpw-bar {
+  height: 8px;
+  background: rgba(0, 0, 0, 0.4);
+  border-radius: 4px;
+  overflow: hidden;
+}
+
+.ljpw-fill {
+  height: 100%;
+  border-radius: 4px;
+  transition: width 0.4s ease;
+}
+
+.ljpw-value {
+  color: var(--text-primary);
+  font-family: var(--font-mono);
+  font-size: 0.8rem;
+  text-align: right;
+}
+
+/* Feedback */
+.analysis-feedback {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  margin-bottom: 1rem;
+}
+
+.feedback-item {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.5rem;
+  padding: 0.5rem 0.75rem;
+  border-radius: 6px;
+  font-size: 0.85rem;
+  line-height: 1.4;
+}
+
+.feedback-icon {
+  flex-shrink: 0;
+  width: 18px;
+  height: 18px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  font-size: 0.75rem;
+}
+
+.feedback-success {
+  background: rgba(46, 213, 115, 0.1);
+  color: #2ed573;
+}
+
+.feedback-success .feedback-icon {
+  background: rgba(46, 213, 115, 0.3);
+}
+
+.feedback-warning {
+  background: rgba(255, 165, 2, 0.1);
+  color: #ffa502;
+}
+
+.feedback-warning .feedback-icon {
+  background: rgba(255, 165, 2, 0.3);
+}
+
+.feedback-tip {
+  background: rgba(107, 91, 149, 0.1);
+  color: var(--accent-mystery);
+}
+
+.feedback-info {
+  background: rgba(78, 205, 196, 0.1);
+  color: var(--accent-hope);
+}
+
+/* Hope Indicator */
+.hope-indicator {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.75rem 1rem;
+  border-radius: 6px;
+  font-size: 0.9rem;
+}
+
+.hope-indicator.has-hope {
+  background: rgba(46, 213, 115, 0.1);
+  border: 1px solid rgba(46, 213, 115, 0.3);
+  color: #2ed573;
+}
+
+.hope-indicator.no-hope {
+  background: rgba(255, 107, 107, 0.1);
+  border: 1px solid rgba(255, 107, 107, 0.3);
+  color: #ff6b6b;
+}
+
+.hope-icon {
+  font-size: 1.1rem;
+}
+
+/* Unforgettable button glow */
+.complete-btn.unforgettable {
+  animation: unforgettableGlow 1.5s ease-in-out infinite alternate;
+}
+
+@keyframes unforgettableGlow {
+  0% {
+    box-shadow: 0 0 20px rgba(255, 217, 61, 0.4), 0 0 40px rgba(46, 213, 115, 0.2);
+  }
+  100% {
+    box-shadow: 0 0 40px rgba(255, 217, 61, 0.6), 0 0 80px rgba(46, 213, 115, 0.3);
+  }
+}
+
 /* Responsive */
 @media (max-width: 600px) {
   .mode-buttons {
@@ -303,5 +549,14 @@
     width: 40px;
     height: 40px;
     font-size: 0.9rem;
+  }
+
+  .formula-display {
+    flex-direction: column;
+    gap: 0.25rem;
+  }
+
+  .ljpw-item {
+    grid-template-columns: 70px 1fr 40px;
   }
 }

@@ -177,3 +177,130 @@
   color: var(--text-muted);
   font-size: 0.85rem;
 }
+
+.atmosphere-indicator {
+  font-size: 1.2rem;
+  cursor: help;
+}
+
+/* =============================================================================
+   ATMOSPHERE OVERLAY - Equation-driven visual
+   ============================================================================= */
+
+.atmosphere-overlay {
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 1;
+  transition: opacity 2s ease, background 2s ease;
+}
+
+.atmosphere-overlay.dormant {
+  background: radial-gradient(ellipse at center, transparent 0%, rgba(10, 10, 18, 0.3) 100%);
+}
+
+.atmosphere-overlay.stirring {
+  background: radial-gradient(ellipse at center, rgba(107, 91, 149, 0.1) 0%, transparent 70%);
+  animation: stirringPulse 4s ease-in-out infinite;
+}
+
+.atmosphere-overlay.awakening {
+  background: radial-gradient(ellipse at center, rgba(78, 205, 196, 0.15) 0%, transparent 60%);
+  animation: awakeningPulse 3s ease-in-out infinite;
+}
+
+@keyframes stirringPulse {
+  0%, 100% { opacity: 0.3; }
+  50% { opacity: 0.5; }
+}
+
+@keyframes awakeningPulse {
+  0%, 100% { opacity: 0.4; transform: scale(1); }
+  50% { opacity: 0.6; transform: scale(1.02); }
+}
+
+/* =============================================================================
+   FINAL ANALYSIS - Victory screen melody results
+   ============================================================================= */
+
+.final-analysis {
+  background: rgba(0, 0, 0, 0.4);
+  border: 1px solid rgba(107, 91, 149, 0.4);
+  border-radius: 12px;
+  padding: 1.5rem;
+  margin: 1.5rem 0;
+}
+
+.final-analysis h3 {
+  color: var(--accent-gold);
+  font-size: 1.1rem;
+  margin-bottom: 1rem;
+}
+
+.analysis-summary {
+  display: flex;
+  justify-content: center;
+  gap: 3rem;
+  margin-bottom: 1rem;
+}
+
+.summary-stat {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.stat-value {
+  font-size: 2rem;
+  font-family: var(--font-display);
+  font-weight: bold;
+  color: var(--accent-hope);
+}
+
+.stat-label {
+  font-size: 0.85rem;
+  color: var(--text-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+}
+
+.analysis-verdict {
+  color: var(--text-secondary) !important;
+  font-size: 1rem !important;
+  font-style: italic;
+  margin: 0 !important;
+}
+
+/* =============================================================================
+   FINAL EQUATION - Show the equation at the end
+   ============================================================================= */
+
+.final-equation {
+  background: rgba(107, 91, 149, 0.1);
+  border: 1px solid rgba(107, 91, 149, 0.3);
+  border-radius: 12px;
+  padding: 1.5rem;
+  margin-top: 2rem;
+}
+
+.final-equation p {
+  margin-bottom: 0.75rem !important;
+}
+
+.equation-display {
+  font-family: var(--font-mono);
+  font-size: 1.5rem;
+  color: var(--accent-gold);
+  text-align: center;
+  padding: 1rem;
+  background: rgba(0, 0, 0, 0.3);
+  border-radius: 8px;
+  margin-bottom: 0.75rem;
+}
+
+.equation-meaning {
+  color: var(--text-muted) !important;
+  font-size: 0.95rem !important;
+  font-style: italic;
+  margin: 0 !important;
+}

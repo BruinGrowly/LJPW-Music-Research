@@ -1,4 +1,4 @@
-import { useState, useEffect, useCallback } from 'react'
+import { useState, useEffect, useCallback, useMemo } from 'react'
 import './Game.css'
 import Room from './Room'
 import Lesson from './Lesson'
@@ -6,7 +6,8 @@ import Piano from './Piano'
 import SongBuilder from './SongBuilder'
 import SilenceMeter from './SilenceMeter'
 import { ROOMS, LESSONS, INITIAL_STATE, STORY } from '../lib/gameData'
-import { playSilenceBreak } from '../lib/midiSynth'
+import { playSilenceBreak, playAtmosphere, stopAtmosphere } from '../lib/midiSynth'
+import { calculateAtmosphere, calculateSilence } from '../lib/generativeEngine'
 
 const STORAGE_KEY = 'echoes-of-ashworth-save'
 
@@ -31,11 +32,41 @@ function Game({ audioInitialized }) {
   const [message, setMessage] = useState(null)
   const [showChapterTitle, setShowChapterTitle] = useState(false)
   const [currentChapter, setCurrentChapter] = useState(null)
+  const [finalMelodyAnalysis, setFinalMelodyAnalysis] = useState(null)
+
+  // Calculate atmosphere using Generative Equation
+  const totalLessons = Object.keys(LESSONS).length
+  const lessonsComplete = gameState.completedLessons.length
+  const mysteriesRemaining = totalLessons - lessonsComplete
+
+  const atmosphere = useMemo(() =>
+    calculateAtmosphere(lessonsComplete, totalLessons, mysteriesRemaining),
+    [lessonsComplete, totalLessons, mysteriesRemaining]
+  )
+
+  const silence = useMemo(() =>
+    calculateSilence(lessonsComplete, totalLessons),
+    [lessonsComplete, totalLessons]
+  )
 
   // Auto-save
   useEffect(() => {
     localStorage.setItem(STORAGE_KEY, JSON.stringify(gameState))
   }, [gameState])
+
+  // Update atmosphere audio based on equation
+  useEffect(() => {
+    if (audioInitialized && !gameState.gameComplete) {
+      if (atmosphere.phase === 'awakening') {
+        playAtmosphere(atmosphere.soundPresence)
+      } else if (atmosphere.phase === 'stirring' && lessonsComplete > 0) {
+        playAtmosphere(atmosphere.soundPresence * 0.5)
+      } else {
+        stopAtmosphere()
+      }
+    }
+    return () => stopAtmosphere()
+  }, [audioInitialized, atmosphere.phase, atmosphere.soundPresence, lessonsComplete, gameState.gameComplete])
 
   // Get current room data
   const currentRoom = ROOMS[gameState.currentRoom]
@@ -115,13 +146,9 @@ function Game({ audioInitialized }) {
     setCurrentLesson(null)
 
     if (!gameState.completedLessons.includes(lessonId)) {
-      // Decrease silence level
-      const silenceDecrease = 20 // Each lesson reduces silence by 20%
-
       setGameState(prev => ({
         ...prev,
         completedLessons: [...prev.completedLessons, lessonId],
-        silenceLevel: Math.max(0, prev.silenceLevel - silenceDecrease),
       }))
 
       // Play the silence-breaking sound
@@ -129,29 +156,36 @@ function Game({ audioInitialized }) {
         playSilenceBreak()
       }
 
-      // Show completion message
+      // Show completion message with equation info
       const room = Object.values(ROOMS).find(r => r.lesson === lessonId)
       if (room?.onComplete) {
+        const newLessonsComplete = gameState.completedLessons.length + 1
+        const newAtmosphere = calculateAtmosphere(newLessonsComplete, totalLessons, totalLessons - newLessonsComplete)
+
         setMessage({
-          text: room.onComplete.message,
+          text: `${room.onComplete.message} [Growth increased to L^${newLessonsComplete}]`,
           type: 'success',
         })
         setTimeout(() => setMessage(null), 5000)
       }
     }
-  }, [gameState.completedLessons, audioInitialized])
+  }, [gameState.completedLessons, audioInitialized, totalLessons])
 
-  // Handle song completion
-  const handleSongComplete = useCallback(() => {
+  // Handle song completion - receives analysis from SongBuilder
+  const handleSongComplete = useCallback((analysis) => {
     setShowSongBuilder(false)
+    setFinalMelodyAnalysis(analysis)
     setGameState(prev => ({
       ...prev,
-      silenceLevel: 0,
       gameComplete: true,
     }))
 
+    const phaseMessage = analysis?.lifeInequality?.phase === 'AUTOPOIETIC'
+      ? 'Your melody is UNFORGETTABLE - it will echo through time.'
+      : 'Your melody holds the silence at bay.'
+
     setMessage({
-      text: 'The Silence Breaker is complete. The manor awakens. Edmund Ashworth, wherever he is now, thanks you.',
+      text: `The Silence Breaker is complete. ${phaseMessage}`,
       type: 'victory',
     })
   }, [])
@@ -161,11 +195,27 @@ function Game({ audioInitialized }) {
     if (confirm('Are you sure you want to start over? All progress will be lost.')) {
       localStorage.removeItem(STORAGE_KEY)
       setGameState({ ...INITIAL_STATE, gameStarted: true })
+      setFinalMelodyAnalysis(null)
     }
   }, [])
 
+  // Dynamic atmosphere styles based on equation
+  const atmosphereStyle = {
+    '--atmosphere-brightness': atmosphere.brightness,
+    '--atmosphere-saturation': atmosphere.saturation,
+    '--atmosphere-activity': atmosphere.particleActivity,
+  }
+
   return (
-    <div className="game">
+    <div className="game" style={atmosphereStyle}>
+      {/* Atmosphere overlay based on equation */}
+      <div
+        className={`atmosphere-overlay ${atmosphere.phase}`}
+        style={{
+          opacity: atmosphere.normalized * 0.3,
+        }}
+      />
+
       {/* Chapter title overlay */}
       {showChapterTitle && currentChapter && (
         <div className="chapter-overlay">
@@ -174,11 +224,10 @@ function Game({ audioInitialized }) {
         </div>
       )}
 
-      {/* Silence meter */}
+      {/* Silence meter - now calculates internally using the equation */}
       <SilenceMeter
-        level={gameState.silenceLevel}
-        lessonsComplete={gameState.completedLessons.length}
-        totalLessons={Object.keys(LESSONS).length}
+        lessonsComplete={lessonsComplete}
+        totalLessons={totalLessons}
       />
 
       {/* Main game area */}
@@ -188,6 +237,7 @@ function Game({ audioInitialized }) {
           gameState={gameState}
           onExamine={handleExamine}
           onNavigate={handleNavigate}
+          atmosphere={atmosphere}
         />
       </div>
 
@@ -233,6 +283,29 @@ function Game({ audioInitialized }) {
               Birds sing outside the windows. The chandelier's crystals tinkle
               in a breeze that now flows freely through the halls.
             </p>
+
+            {/* Show melody analysis */}
+            {finalMelodyAnalysis && (
+              <div className="final-analysis">
+                <h3>Your Melody's Legacy</h3>
+                <div className="analysis-summary">
+                  <div className="summary-stat">
+                    <span className="stat-value">{finalMelodyAnalysis.memorabilityScore}%</span>
+                    <span className="stat-label">Memorability</span>
+                  </div>
+                  <div className="summary-stat">
+                    <span className="stat-value" style={{ color: finalMelodyAnalysis.lifeInequality?.color }}>
+                      {finalMelodyAnalysis.lifeInequality?.userPhase}
+                    </span>
+                    <span className="stat-label">Classification</span>
+                  </div>
+                </div>
+                <p className="analysis-verdict">
+                  {finalMelodyAnalysis.lifeInequality?.verdict}
+                </p>
+              </div>
+            )}
+
             <p>
               You understand now. Edmund Ashworth didn't die. He became part of
               something larger - the silence itself, waiting for someone to give
@@ -246,6 +319,18 @@ function Game({ audioInitialized }) {
               Music is the antidote to silence. Understanding is the key to
               connection. And you, now, are a musician.
             </p>
+
+            {/* Show the equation */}
+            <div className="final-equation">
+              <p>The Generative Equation that guided your journey:</p>
+              <div className="equation-display">
+                M = B × L<sup>n</sup> × φ<sup>-d</sup>
+              </div>
+              <p className="equation-meaning">
+                Meaning grows through Love and iteration, overcoming distance.
+              </p>
+            </div>
+
             <button onClick={handleReset}>Play Again</button>
           </div>
         </div>
@@ -257,7 +342,12 @@ function Game({ audioInitialized }) {
           New Game
         </button>
         <span className="progress">
-          {gameState.completedLessons.length}/{Object.keys(LESSONS).length} concepts learned
+          {lessonsComplete}/{totalLessons} concepts learned
+        </span>
+        <span className="atmosphere-indicator" title={atmosphere.description}>
+          {atmosphere.phase === 'awakening' && '🎵'}
+          {atmosphere.phase === 'stirring' && '🎶'}
+          {atmosphere.phase === 'dormant' && '🔇'}
         </span>
       </div>
     </div>

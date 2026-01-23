@@ -65,6 +65,62 @@
   background: rgba(255, 255, 255, 0.1);
 }
 
+/* Equation Visualization */
+.equation-visual {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0.5rem 0;
+  margin-bottom: 0.5rem;
+  border-bottom: 1px solid rgba(107, 91, 149, 0.2);
+}
+
+.equation-side {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.15rem;
+}
+
+.eq-label {
+  font-size: 0.65rem;
+  color: var(--text-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.eq-value {
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+}
+
+.equation-side.growth .eq-value {
+  color: var(--accent-hope);
+}
+
+.equation-side.decay .eq-value {
+  color: var(--accent-mystery);
+}
+
+.equation-vs {
+  font-size: 1rem;
+  font-weight: bold;
+}
+
+.equation-vs .winning {
+  color: var(--accent-hope);
+  animation: vsWinPulse 1.5s ease-in-out infinite;
+}
+
+.equation-vs .losing {
+  color: #ff6b6b;
+}
+
+@keyframes vsWinPulse {
+  0%, 100% { opacity: 0.7; }
+  50% { opacity: 1; }
+}
+
 .meter-footer {
   display: flex;
   justify-content: space-between;
