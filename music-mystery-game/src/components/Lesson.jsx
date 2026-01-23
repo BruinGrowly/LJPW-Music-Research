@@ -1,7 +1,7 @@
 import { useState } from 'react'
 import './Lesson.css'
 import { INTERVALS, MODES, CHORDS } from '../lib/musicTheory'
-import { playNote, playInterval, playScale, playChord, buildChord, buildScale } from '../lib/midiSynth'
+import { playNote, playInterval, playScale, playChord, buildChord } from '../lib/midiSynth'
 
 function Lesson({ lesson, onComplete, onClose }) {
   const [showInteractive, setShowInteractive] = useState(false)
