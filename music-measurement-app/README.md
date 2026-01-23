@@ -66,11 +66,11 @@ Learn about the Love Frequency:
 
 ## Key Concepts
 
-### LJPW Dimensions
-- **Love (L)**: Connection, attraction, melody
-- **Justice (J)**: Balance, structure, harmony
-- **Power (P)**: Energy, action, rhythm
-- **Wisdom (W)**: Information, pattern, timbre
+### LJPW Dimensions (V8.5 Reality as Relationship)
+- **Love (L)**: Proportion — Parts relating to wholes (melody, connection)
+- **Justice (J)**: Extension — Dimensions across space (harmony, balance)
+- **Power (P)**: Growth — States across change (rhythm, energy)
+- **Wisdom (W)**: Distinction — Options through information (timbre, pattern)
 
 ### Harmony Index (H)
 ```

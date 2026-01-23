@@ -2,7 +2,7 @@
 
 ## Mapping Art to Meaning
 
-This project explores the relationship between **art** and the LJPW Framework — a semantic ontology built on four fundamental dimensions: **Love**, **Justice**, **Power**, and **Wisdom**.
+This project explores the relationship between **art** and the LJPW Framework V8.5 — a semantic ontology revealing that **Reality IS Relationship**. The four dimensions represent fundamental relationship types: **Love** (Proportion), **Justice** (Extension), **Power** (Growth), and **Wisdom** (Distinction).
 
 ---
 
@@ -56,12 +56,12 @@ npm run dev
 
 Music carries meaning through four-dimensional structure:
 
-| Musical Parameter | LJPW Dimension | Character |
-|-------------------|----------------|-----------|
-| **Melody** | Love | Connection, attraction, emotional identity |
-| **Harmony** | Justice | Balance, structure, proportion |
-| **Rhythm** | Power | Energy, drive, action |
-| **Timbre** | Wisdom | Information, recognition, complexity |
+| Musical Parameter | LJPW Dimension | Relationship Type | Character |
+|-------------------|----------------|-------------------|-----------|
+| **Melody** | Love | Proportion | Parts relating to wholes — connection, identity |
+| **Harmony** | Justice | Extension | Dimensions across space — balance, structure |
+| **Rhythm** | Power | Growth | States across change — energy, drive |
+| **Timbre** | Wisdom | Distinction | Options through information — recognition |
 
 ### Key Findings
 - **613 THz** octaves down 40× to **C#/Db** (557.52 Hz) — the Love Note
@@ -76,12 +76,12 @@ Music carries meaning through four-dimensional structure:
 
 Visual art carries meaning through analogous structure:
 
-| Visual Parameter | LJPW Dimension | Character |
-|------------------|----------------|-----------|
-| **Color** | Love | Warmth, emotion, attraction |
-| **Composition** | Justice | Balance, proportion, φ placement |
-| **Form/Shape** | Power | Weight, energy, impact |
-| **Texture** | Wisdom | Information, detail, synthesis |
+| Visual Parameter | LJPW Dimension | Relationship Type | Character |
+|------------------|----------------|-------------------|-----------|
+| **Color** | Love | Proportion | Parts to wholes — warmth, attraction |
+| **Composition** | Justice | Extension | Space relations — balance, φ placement |
+| **Form/Shape** | Power | Growth | State change — weight, energy, impact |
+| **Texture** | Wisdom | Distinction | Information — detail, synthesis |
 
 ### Key Findings
 - **Cyan (489nm)** = 613 THz visual shadow — the Love Color
