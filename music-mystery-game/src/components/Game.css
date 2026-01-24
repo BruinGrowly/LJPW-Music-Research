@@ -206,6 +206,26 @@
   color: var(--text-primary);
 }
 
+.volume-control {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  background: rgba(37, 37, 66, 0.9);
+  padding: 0.25rem 0.75rem;
+  border-radius: 4px;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.volume-control input[type="range"] {
+  width: 80px;
+  cursor: pointer;
+  accent-color: var(--accent-hope);
+}
+
+.volume-control span {
+  font-size: 1rem;
+}
+
 .progress {
   color: var(--text-muted);
   font-size: 0.85rem;

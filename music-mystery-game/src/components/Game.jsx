@@ -6,7 +6,7 @@ import Piano from './Piano'
 import SongBuilder from './SongBuilder'
 import SilenceMeter from './SilenceMeter'
 import { ROOMS, LESSONS, INITIAL_STATE, STORY } from '../lib/gameData'
-import { playSilenceBreak, playAtmosphere, stopAtmosphere } from '../lib/midiSynth'
+import { playSilenceBreak, playAtmosphere, stopAtmosphere, setMasterVolume } from '../lib/midiSynth'
 import { calculateAtmosphere, calculateSilence } from '../lib/generativeEngine'
 
 const STORAGE_KEY = 'echoes-of-ashworth-save'
@@ -33,6 +33,7 @@ function Game({ audioInitialized }) {
   const [showChapterTitle, setShowChapterTitle] = useState(false)
   const [currentChapter, setCurrentChapter] = useState(null)
   const [finalMelodyAnalysis, setFinalMelodyAnalysis] = useState(null)
+  const [volume, setVolume] = useState(0.3)
 
   // Calculate atmosphere using Generative Equation
   const totalLessons = Object.keys(LESSONS).length
@@ -199,6 +200,13 @@ function Game({ audioInitialized }) {
     }
   }, [])
 
+  // Handle volume change
+  const handleVolumeChange = useCallback((e) => {
+    const newVolume = parseFloat(e.target.value)
+    setVolume(newVolume)
+    setMasterVolume(newVolume)
+  }, [])
+
   // Dynamic atmosphere styles based on equation
   const atmosphereStyle = {
     '--atmosphere-brightness': atmosphere.brightness,
@@ -338,6 +346,23 @@ function Game({ audioInitialized }) {
 
       {/* Controls */}
       <div className="game-controls">
+        <button className="control-btn" onClick={() => setShowPiano(true)}>
+          🎹 Practice
+        </button>
+
+        <div className="volume-control">
+          <span>🔊</span>
+          <input
+            type="range"
+            min="0"
+            max="1"
+            step="0.05"
+            value={volume}
+            onChange={handleVolumeChange}
+            title={`Volume: ${Math.round(volume * 100)}%`}
+          />
+        </div>
+
         <button className="control-btn" onClick={handleReset}>
           New Game
         </button>
