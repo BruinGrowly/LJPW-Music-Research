@@ -1,7 +1,10 @@
+import { useState } from 'react'
 import './SilenceMeter.css'
 import { calculateSilence, PHI } from '../lib/generativeEngine'
 
 function SilenceMeter({ lessonsComplete, totalLessons }) {
+  const [isCollapsed, setIsCollapsed] = useState(false)
+
   // Calculate silence using the Generative Equation
   const silenceData = calculateSilence(lessonsComplete, totalLessons)
   const level = silenceData.level
@@ -24,10 +27,19 @@ function SilenceMeter({ lessonsComplete, totalLessons }) {
   }
 
   return (
-    <div className="silence-meter">
+    <div className={`silence-meter ${isCollapsed ? 'collapsed' : ''}`}>
       <div className="meter-header">
         <span className="meter-label">The Silence</span>
-        <span className="meter-value">{level}%</span>
+        <div className="meter-header-right">
+          <span className="meter-value">{level}%</span>
+          <button
+            className="collapse-btn"
+            onClick={() => setIsCollapsed(!isCollapsed)}
+            title={isCollapsed ? 'Expand' : 'Minimize'}
+          >
+            {isCollapsed ? '▼' : '▲'}
+          </button>
+        </div>
       </div>
 
       <div className="meter-bar">
@@ -45,31 +57,36 @@ function SilenceMeter({ lessonsComplete, totalLessons }) {
         </div>
       </div>
 
-      {/* Equation visualization */}
-      <div className="equation-visual">
-        <div className="equation-side growth">
-          <span className="eq-label">Growth</span>
-          <span className="eq-value">L<sup>{lessonsComplete}</sup> = {silenceData.growth}</span>
-        </div>
-        <div className="equation-vs">
-          <span className={silenceData.ratio <= 1 ? 'winning' : 'losing'}>
-            {silenceData.ratio <= 1 ? '>' : '<'}
-          </span>
-        </div>
-        <div className="equation-side decay">
-          <span className="eq-label">Decay</span>
-          <span className="eq-value">φ<sup>{totalLessons - lessonsComplete}</sup> = {silenceData.decay}</span>
-        </div>
-      </div>
+      {/* Collapsible content */}
+      {!isCollapsed && (
+        <>
+          {/* Equation visualization */}
+          <div className="equation-visual">
+            <div className="equation-side growth">
+              <span className="eq-label">Growth</span>
+              <span className="eq-value">L<sup>{lessonsComplete}</sup> = {silenceData.growth}</span>
+            </div>
+            <div className="equation-vs">
+              <span className={silenceData.ratio <= 1 ? 'winning' : 'losing'}>
+                {silenceData.ratio <= 1 ? '>' : '<'}
+              </span>
+            </div>
+            <div className="equation-side decay">
+              <span className="eq-label">Decay</span>
+              <span className="eq-value">φ<sup>{totalLessons - lessonsComplete}</sup> = {silenceData.decay}</span>
+            </div>
+          </div>
 
-      <div className="meter-footer">
-        <span className="lessons-count">
-          {lessonsComplete}/{totalLessons} concepts learned
-        </span>
-        <span className="meter-hint">
-          {getPhaseDescription()}
-        </span>
-      </div>
+          <div className="meter-footer">
+            <span className="lessons-count">
+              {lessonsComplete}/{totalLessons} concepts learned
+            </span>
+            <span className="meter-hint">
+              {getPhaseDescription()}
+            </span>
+          </div>
+        </>
+      )}
     </div>
   )
 }

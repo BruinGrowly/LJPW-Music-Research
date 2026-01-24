@@ -23,6 +23,12 @@
   margin-bottom: 0.5rem;
 }
 
+.meter-header-right {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
 .meter-label {
   color: var(--text-secondary);
   font-size: 0.85rem;
@@ -34,6 +40,33 @@
   color: var(--text-primary);
   font-family: var(--font-mono);
   font-size: 0.9rem;
+}
+
+.collapse-btn {
+  background: transparent;
+  border: 1px solid rgba(107, 91, 149, 0.3);
+  color: var(--text-muted);
+  padding: 0.15rem 0.4rem;
+  font-size: 0.65rem;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  line-height: 1;
+}
+
+.collapse-btn:hover {
+  background: rgba(107, 91, 149, 0.2);
+  color: var(--text-primary);
+  border-color: var(--accent-mystery);
+}
+
+/* Collapsed state */
+.silence-meter.collapsed {
+  padding: 0.5rem 0.75rem;
+}
+
+.silence-meter.collapsed .meter-bar {
+  margin-bottom: 0;
 }
 
 .meter-bar {
@@ -117,8 +150,15 @@
 }
 
 @keyframes vsWinPulse {
-  0%, 100% { opacity: 0.7; }
-  50% { opacity: 1; }
+
+  0%,
+  100% {
+    opacity: 0.7;
+  }
+
+  50% {
+    opacity: 1;
+  }
 }
 
 .meter-footer {
@@ -140,8 +180,15 @@
 }
 
 @keyframes hintPulse {
-  0%, 100% { opacity: 0.7; }
-  50% { opacity: 1; }
+
+  0%,
+  100% {
+    opacity: 0.7;
+  }
+
+  50% {
+    opacity: 1;
+  }
 }
 
 /* When silence is high (oppressive) */
